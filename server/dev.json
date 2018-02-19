@@ -1,0 +1,14 @@
+{
+	"user": {
+		"log": "trace"
+	},
+	"identity": {
+		"log": "trace"
+	},
+	"http": {
+		"port": 3000
+	},
+	"http2": {
+		"port": 8082
+	}
+}
