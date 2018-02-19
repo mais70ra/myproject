@@ -1,17 +1,19 @@
-var bus = {};
-var modules = require('../index').modules;
-var ports = require('../index').ports;
-var availablePorts = {
+const bus = {};
+// const log = require("../../modules/log");
+const log = (msg) => {
+    console.log(msg);
+}
+const modules = require('../index').modules;
+const ports = require('../index').ports;
+const availablePorts = {
     http: require('../http')
 };
-var when = require('when');
-var config = require('../dev.json');
-var LogWriter = require('log-writer');
+const config = require('../dev.json');
+const trace = 0;
 
-var trace = 0;
 module.exports = {
     config: config,
-    init: function() {
+    init: () => {
         bus.methods = {};
         var modulesKeys = Object.keys(modules);
         for (var mod in modulesKeys) {
@@ -104,7 +106,7 @@ module.exports = {
                             params: params
                         });
                     }
-                    return when.resolve(r);
+                    return Promise.resolve(r);
                 })
                 .catch((e) => {
                     if (config[module] && config[module].log === 'trace') {
@@ -115,7 +117,7 @@ module.exports = {
                             params: e
                         });
                     }
-                    return when.reject(e);
+                    return Promise.reject(e);
                 });
             } catch (e) {
                 log({
@@ -133,12 +135,4 @@ module.exports = {
             throw Error('Method not found');
         }
     }
-};
-
-function log(dataLog) {
-    dataLog.datetime = new Date().toISOString();
-    console.log(dataLog);
-    var writer = new LogWriter('./log/log-file-name-%s.log');
-    writer.write(JSON.stringify(dataLog) + '\r\n');
-    writer.end();
 };

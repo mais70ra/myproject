@@ -1,4 +1,3 @@
-var when = require('when');
 var users = [{
     id: 1,
     username: 'dido',
@@ -18,9 +17,9 @@ module.exports = {
     },
     get: function(msg) {
         if (msg && msg.id) {
-            return when.resolve(users[msg.id]);
+            return Promise.resolve(users[msg.id]);
         } else {
-            return when.resolve(users);
+            return Promise.resolve(users);
         }
     }
 };

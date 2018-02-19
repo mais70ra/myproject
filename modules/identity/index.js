@@ -1,4 +1,3 @@
-var when = require('when');
 var bus;
 module.exports = {
     init: function(b) {
@@ -17,9 +16,9 @@ module.exports = {
                 }
             });
             if (user) {
-                return when.resolve(user);
+                return Promise.resolve(user);
             } else {
-                return when.reject({
+                return Promise.reject({
                     success: false,
                     message: 'Ti ne si Dido'
                 });

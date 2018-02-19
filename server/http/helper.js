@@ -1,19 +1,18 @@
-var when = require('when');
 module.exports = {
     validateRpcRequest: function(body) {
         if (!body.method) {
-            return when.reject('Proparty method is missing');
+            return new Promise.reject('Proparty method is missing');
         }
         if (!body.id) {
-            return when.reject('Proparty id  is missing');
+            return new Promise.reject('Proparty id  is missing');
         }
         if (!body.jsonrpc) {
-            return when.reject('Proparty jsonrpc  is missing');
+            return new Promise.reject('Proparty jsonrpc  is missing');
         }
         if (!body.params) {
-            return when.reject('Proparty params  is missing');
+            return new Promise.reject('Proparty params  is missing');
         }
-        return when.resolve(true);
+        return new Promise.resolve(true);
     },
     processPost: function(request, responseonse, callback) {
         let queryData = '';
