@@ -7,7 +7,8 @@
 	},
 	"http": {
 		"port": 3000,
-		"publicPath": "/ui/"
+		"publicPath": "/ui/",
+		"errorLog": "trace"
 	},
 	"http2": {
 		"port": 8082
