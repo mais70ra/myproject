@@ -1,19 +1,7 @@
-var users = [{
-    id: 1,
-    username: 'dido',
-    password: 'epich'
-}, {
-    id: 2,
-    username: 'kiki',
-    password: 'epich'
-}, {
-    id: 3,
-    username: 'tisho',
-    password: 'epich'
-}];
+var bus;
 module.exports = {
     init: function(b) {
-
+        bus = b;
     },
     get: function(msg) {
         if (msg && msg.id) {
@@ -21,5 +9,8 @@ module.exports = {
         } else {
             return Promise.resolve(users);
         }
+    },
+    add: function(msg) {
+        return bus.call('db.query', 'user', 'create', msg);
     }
 };

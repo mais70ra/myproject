@@ -8,7 +8,7 @@ const log = require("../../modules/log");
 const err = require("../../modules/error");
 
 module.exports = {
-  start: function(bus, routes) {
+  init: function(bus, routes) {
     return new Promise((resolve, reject) => {
       var app = express();
       if (bus.config.publicPath) {

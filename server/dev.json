@@ -5,6 +5,21 @@
 	"identity": {
 		"log": "trace"
 	},
+	"db": {
+		"credentinals": {
+			"database": "myProject",
+			"username": "postgres",
+			"password": "123"
+		},
+		"props": {
+			"dialect": "postgres",
+			"host": "localhost",
+			"port": "5432",
+			"define": {
+				"freezeTableName": true
+			}
+		}
+	},
 	"http": {
 		"port": 3000,
 		"publicPath": "/ui/",

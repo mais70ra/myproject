@@ -1,10 +1,15 @@
+'use strict';
 module.exports = {
     ports: {
-        http: require('../http'),
-        // http2: require('../http2')
+        http: require('./http'),
+        db: require('./db')([
+            require('../modules/user/definition'),
+            require('../modules/role/definition'),
+        ])
     },
     modules: {
         identity: require('../modules/identity'),
-        user: require('../modules/user')
+        user: require('../modules/user'),
+        role: require('../modules/role')
     }
 };
