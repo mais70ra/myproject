@@ -17,6 +17,18 @@ var codes = {
     'header_content_type_is_not_json': {
         message: 'The header "content-type" is not application/json; charset=utf-8'
     },
+    'invalid_credentials': {
+        message: 'Invalid credentials'
+    },
+    'reached_login_attempts': {
+        message: 'Your profile is locked because of too many login attempts.'
+    },
+    'user_locked': {
+        message: 'Your profile is locked.'
+    },
+    'user_inactive': {
+        message: 'Your profile is inactive.'
+    },
     'undefined': {
         message: 'No error message'
     }

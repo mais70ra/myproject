@@ -2,6 +2,7 @@
 var Sequelize = require('sequelize');
 var sequelize;
 var db = {};
+const Op = Sequelize.Op;
 var bus;
 var maps;
 module.exports = (m) => {
@@ -24,8 +25,10 @@ module.exports = (m) => {
             });
             sequelize.sync();
         },
-        query: (obj, operation, msg) => {
-            return db[obj][operation](msg);
+        query: (...obj) => {
+            // obj, operation, msg
+            let msg = Array.prototype.slice.call(obj, 2);
+            return db[obj[0]][obj[1]].apply(db[obj[0]], msg);
         }
     };
 };

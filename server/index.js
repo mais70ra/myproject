@@ -3,13 +3,14 @@ module.exports = {
     ports: {
         http: require('./http'),
         db: require('./db')([
-            require('../modules/user/definition'),
-            require('../modules/role/definition'),
+            require('../impl/user/definition'),
+            require('../impl/role/definition'),
+            require('../impl/product/definition'),
         ])
     },
     modules: {
-        identity: require('../modules/identity'),
-        user: require('../modules/user'),
-        role: require('../modules/role')
+        user: require('../impl/user'),
+        product: require('../impl/product'),
+        role: require('../impl/role')
     }
 };

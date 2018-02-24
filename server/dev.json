@@ -1,5 +1,6 @@
 {
 	"user": {
+		"loginAttempts": 3,
 		"log": "trace"
 	},
 	"identity": {

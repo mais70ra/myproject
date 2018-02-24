@@ -28,7 +28,7 @@ module.exports = {
             if (modules[modulesKeys[mod]] && modules[modulesKeys[mod]].init) {
                 modules[modulesKeys[mod]].init({
                     call: call,
-                    config: this.config
+                    config: config[modulesKeys[mod]]
                 });
             }
         }
