@@ -35,7 +35,6 @@ module.exports = {
         }
     }, {
         name: 'middleName',
-        gdpr: true,
         define: {
             type: 'STRING',
             allowNull: true,

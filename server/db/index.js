@@ -54,7 +54,7 @@ module.exports = (m) => {
             return db[obj[0]][obj[1]].apply(db[obj[0]], msg)
             .then(resp => {
                 if (objects[obj[0]].gdpr) {
-                    if (Array.isArray(resp)) {
+                    if (Array.isArray(resp) && resp.length > 0) {
                         resp.forEach((row) => {
                             objects[obj[0]].gdpr.forEach(field => {
                                 if (row[field]) {
