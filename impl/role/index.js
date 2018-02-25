@@ -4,9 +4,9 @@ module.exports = {
         bus = b;
     },
     get: function(msg) {
-        return bus.call('db.query', 'role', 'create', msg);
+        return bus.call('db.send', 'role', 'create', msg);
     },
     add: function(msg) {
-        return bus.call('db.query', 'role', 'create', msg);
+        return bus.call('db.send', 'role', 'create', msg);
     }
 };

@@ -12,6 +12,7 @@
 			"username": "postgres",
 			"password": "123"
 		},
+		"gdprKey": "AiwZZM23a",
 		"props": {
 			"dialect": "postgres",
 			"host": "localhost",

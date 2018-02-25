@@ -12,6 +12,7 @@ module.exports = {
             err.code = (errorCodes[code.message] && errorCodes[code.message].code) || 'undefined';
             err.message = err.code === 'undefined' ? code.message : errorCodes[err.code].message;
             err.stack = err.code === 'undefined' ? code.stack : (errorCodes[err.code].stack || code.stack);
+            err.errors = code.errors;
         } else {
             err.message = errorCodes.undefined.message;
             err.code = errorCodes.undefined.code;

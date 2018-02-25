@@ -35,6 +35,9 @@ module.exports = {
                 message: e.message
               }
             };
+            if (e.errors) {
+              bodyRes.error.errors = e.errors;
+            }
             if (bus.config.errorLog === "trace") {
               bodyRes.error.stack = e.stack;
             }

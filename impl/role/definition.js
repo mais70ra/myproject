@@ -2,6 +2,8 @@ module.exports = {
     name: 'role',
     fields: [{
         name: 'name',
-        type: 'STRING'
+        define: {
+            type: 'STRING',
+        }
     }]
 };

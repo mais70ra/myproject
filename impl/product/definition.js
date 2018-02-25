@@ -2,12 +2,18 @@ module.exports = {
     name: 'product',
     fields: [{
         name: 'name',
-        type: 'STRING'
+        define: {
+            type: 'STRING',
+        }
     }, {
         name: 'description',
-        type: 'STRING'
+        define: {
+            type: 'STRING',
+        }
     }, {
         name: 'price',
-        type: 'INTEGER'
+        define: {
+            type: 'INTEGER',
+        }
     }]
 };

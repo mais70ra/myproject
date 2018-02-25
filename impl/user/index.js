@@ -4,17 +4,17 @@ module.exports = {
         bus = b;
     },
     findAll: function(msg) {
-        return bus.call('db.query', 'user', 'findAll', { 
+        return bus.call('db.send', 'user', 'findAll', { 
             offset: msg.page || 0,
             limit: msg.limit || 10
         });
     },
     add: function(msg) {
         msg.loginAttempts = 0;
-        return bus.call('db.query', 'user', 'create', msg);
+        return bus.call('db.send', 'user', 'create', msg);
     },
     login: function(msg) {
-        return bus.call('db.query', 'user', 'findAll', {
+        return bus.call('db.send', 'user', 'findAll', {
             where: {
                 username: msg.username
             }
@@ -22,7 +22,7 @@ module.exports = {
         .then(resp => {
             if (resp[0]) {
                 if (resp[0].status === 'active') {
-                    return bus.call('db.query', 'user', 'findAll', {
+                    return bus.call('db.send', 'user', 'findAll', {
                         where: {
                             status: 'active',
                             username: msg.username,
@@ -34,7 +34,7 @@ module.exports = {
                             return user[0];
                         } else {
                             resp[0].loginAttempts = resp[0].loginAttempts + 1;
-                            return bus.call('db.query', 'user', 'update', {
+                            return bus.call('db.send', 'user', 'update', {
                                 loginAttempts: resp[0].loginAttempts,
                                 status: resp[0].loginAttempts === bus.config.loginAttempts ? 'locked' : 'active',
                             }, {
