@@ -1,17 +1,25 @@
 var bus;
+var CryptoJS = require('crypto-js');
+var fieldsList = require('./definition').fieldsList;
+
 module.exports = {
     init: function(b) {
         bus = b;
     },
     findAll: function(msg) {
-        return bus.call('db.send', 'user', 'findAll', { 
+        return bus.call('db.send', 'user', 'findAll', {
             offset: msg.page || 0,
             limit: msg.limit || 10
         });
     },
     add: function(msg) {
         msg.loginAttempts = 0;
-        return bus.call('db.send', 'user', 'create', msg);
+        msg.password = CryptoJS.MD5(msg.password).toString();
+        return bus.call('db.send', 'user', 'create', msg)
+        .then((user) => {
+            user.password = undefined;
+            return user;
+        });
     },
     login: function(msg) {
         return bus.call('db.send', 'user', 'findAll', {
@@ -26,7 +34,7 @@ module.exports = {
                         where: {
                             status: 'active',
                             username: msg.username,
-                            password: msg.password
+                            password: CryptoJS.MD5(msg.password).toString()
                         }
                     })
                     .then(user => {

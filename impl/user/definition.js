@@ -1,5 +1,13 @@
 module.exports = {
     name: 'user',
+    fieldsList: [
+        'username',
+        'firstName',
+        'middleName',
+        'email',
+        'loginAttempts',
+        'status'
+    ],
     fields: [{
         name: 'username',
         define: {
@@ -16,11 +24,7 @@ module.exports = {
         name: 'password',
         define: {
             type: 'STRING',
-            typeParams: [25],
-            allowNull: false,
-            validate: {
-                len: [2, 25]
-            }
+            allowNull: false
         }
     }, {
         name: 'firstName',
@@ -75,6 +79,7 @@ module.exports = {
         }
     }, {
         name: 'loginAttempts',
+        includeInList: false,
         define: {
             type: 'SMALLINT',
             typeParams: [2],
@@ -93,5 +98,10 @@ module.exports = {
                 len: [2, 10]
             }
         }
-    }]
+    }],
+    extend: {
+        defaultScope: {
+            attributes: { exclude: ['password'] },
+        }
+    }
 };

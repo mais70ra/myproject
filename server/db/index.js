@@ -36,7 +36,7 @@ module.exports = (m) => {
                     }
                     define[field.name] = field.define;
                 });
-                db[map.name] = sequelize.define(map.name, define);
+                db[map.name] = sequelize.define(map.name, define, map.extend);
             });
             sequelize.sync();
         },
