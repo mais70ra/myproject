@@ -1,18 +1,19 @@
 'use strict';
-var Sequelize = require('sequelize');
-Sequelize.Validator.notNull = function (item) {
-    return !this.isNull(item);
-};
-var CryptoJS = require("crypto-js");
 
-var sequelize;
-var db = {};
-const Op = Sequelize.Op;
-var bus;
-var objects = {};
+var CryptoJS = require("crypto-js");
 module.exports = (m) => {
-    var maps = m;
+    var Sequelize = require('sequelize');
+    Sequelize.Validator.notNull = function (item) {
+        return !this.isNull(item);
+    };
+    var sequelize;
+    var db = {};
+    const Op = Sequelize.Op;
+    var bus;
+    var objects = {};
+    var maps = m.slice(0);
     return {
+        type: 'db',
         init: (b) => {
             bus = b;
             sequelize = new Sequelize(

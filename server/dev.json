@@ -22,12 +22,30 @@
 			}
 		}
 	},
-	"http": {
+	"second": {
+		"credentinals": {
+			"database": "myProject2",
+			"username": "postgres",
+			"password": "123"
+		},
+		"gdprKey": "AiwZZM23a",
+		"props": {
+			"dialect": "postgres",
+			"host": "localhost",
+			"port": "5432",
+			"define": {
+				"freezeTableName": true
+			}
+		}
+	},
+	"httpserver": {
 		"port": 3000,
 		"publicPath": "/ui/",
 		"errorLog": "trace"
 	},
-	"http2": {
-		"port": 8082
+	"httpserver2": {
+		"port": 3001,
+		"publicPath": "/ui/",
+		"errorLog": "trace"
 	}
 }

@@ -1,12 +1,8 @@
 'use strict';
 module.exports = {
     ports: {
-        http: require('./http'),
-        db: require('./db')([
-            require('../impl/user/definition'),
-            require('../impl/role/definition'),
-            require('../impl/product/definition'),
-        ])
+        httpserver: require('../httpserver'),
+        db: require('../db')
     },
     modules: {
         user: require('../impl/user'),

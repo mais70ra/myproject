@@ -6,6 +6,9 @@ module.exports = {
     init: function(b) {
         bus = b;
     },
+    checks: function(msg) {
+        return Promise.resolve(msg);
+    },
     findAll: function(msg) {
         return bus.call('db.send', 'user', 'findAll', {
             offset: msg.page || 0,

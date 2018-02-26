@@ -5,6 +5,9 @@ const log = (msg) => {
 }
 const modules = require('../index').modules;
 const ports = require('../index').ports;
+const identity = require('./identity');
+const Db = require('./db');
+const Httpserver = require('./httpserver');
 
 const config = require('../dev.json');
 var trace = 0;
@@ -45,11 +48,34 @@ module.exports = {
             }
         }
         for (mod in portsKeys) {
-            if (ports[portsKeys[mod]]) {
-                ports[portsKeys[mod]].init({
+            if (ports[portsKeys[mod]].type === 'httpserver') {
+                let httpserver = new Httpserver({
                     call: call,
                     config: config[portsKeys[mod]]
-                }, ports[portsKeys[mod]].routes);
+                });
+                httpserver.init(ports[portsKeys[mod]])
+                .then(() => {
+                    ports[portsKeys[mod]].init({
+                        call: call,
+                        config: config[portsKeys[mod]]
+                    });
+                });
+            } else if (ports[portsKeys[mod]].type === 'db') {
+                if (!Array.isArray(ports[portsKeys[mod]].definitions)) {
+                    throw new Error('Missing definitions in the db port ' + mod);
+                }
+                let db = new Db({
+                    call: call,
+                    config: config[portsKeys[mod]]
+                });
+                db.init(JSON.parse(JSON.stringify(ports[portsKeys[mod]].definitions)))
+                .then(() => {
+                    bus.methods[portsKeys[mod] + '.send'] = db.send;
+                    ports[portsKeys[mod]].init({
+                        call: call,
+                        config: config[portsKeys[mod]]
+                    });
+                });
             } else {
                 log({
                     io: 'error',
@@ -59,8 +85,10 @@ module.exports = {
                 });
             }
         }
+        identity.init(bus);
     },
-    call: call
+    call: call,
+    identity: identity
 };
 var call = (...params) => {
     let method = params[0];
