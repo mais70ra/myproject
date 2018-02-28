@@ -2,6 +2,15 @@ var codes = {
     'method_missing': {
         message: 'Proparty method is missing'
     },
+    'method_not_found': {
+        message: 'Method not found'
+    },
+    'proparty_jwtKey_missing': {
+        message: 'The proparty jwtKey is missing'
+    },
+    'you_are_not_logged_in': {
+        message: 'You are not logged in. Please log in and try again'
+    },
     'id_missing': {
         message: 'Proparty id is missing'
     },

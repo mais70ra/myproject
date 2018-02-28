@@ -15,12 +15,11 @@ function Db (bus) {
 
 Db.prototype.init = function(m) {
     var maps = m.slice(0);
-    this.bus.config;
     this.sequelize = new Sequelize(
-        this.bus.config.credentinals.database,
-        this.bus.config.credentinals.username,
-        this.bus.config.credentinals.password,
-        this.bus.config.props
+        this.bus.config[this.bus.id].credentinals.database,
+        this.bus.config[this.bus.id].credentinals.username,
+        this.bus.config[this.bus.id].credentinals.password,
+        this.bus.config[this.bus.id].props
     );
     maps.forEach(function(map) {
         let define = {};
@@ -39,6 +38,7 @@ Db.prototype.init = function(m) {
         }.bind(this));
         this.db[map.name] = this.sequelize.define(map.name, define, map.extend);
     }.bind(this));
+    Db.self = this;
     return this.sequelize.sync()
     .then(function() {
         return Promise.resolve(true);
@@ -48,29 +48,29 @@ Db.prototype.init = function(m) {
 Db.prototype.send = (...obj) => {
     // obj, operation, msg
     let msg = Array.prototype.slice.call(obj, 2);
-    let gdprKey = this.bus.config.gdprKey;
-    if (this.objects[obj[0]].gdpr) {
-        this.objects[obj[0]].gdpr.forEach(field => {
+    let gdprKey = Db.self.bus.config[Db.self.bus.id].gdprKey;
+    if (Db.self.objects[obj[0]].gdpr) {
+        Db.self.objects[obj[0]].gdpr.forEach(field => {
             if (obj[2] && obj[2][field]) {
                 obj[2][field] = CryptoJS.AES.encrypt(obj[2][field], gdprKey);
                 obj[2][field] = obj[2][field].toString();
             }
         });
     }
-    return this.db[obj[0]][obj[1]].apply(this.db[obj[0]], msg)
+    return Db.self.db[obj[0]][obj[1]].apply(Db.self.db[obj[0]], msg)
     .then(resp => {
-        if (this.objects[obj[0]].gdpr) {
+        if (Db.self.objects[obj[0]].gdpr) {
             if (Array.isArray(resp) && resp.length > 0) {
                 resp.forEach((row) => {
-                    this.objects[obj[0]].gdpr.forEach(field => {
+                    Db.self.objects[obj[0]].gdpr.forEach(field => {
                         if (row[field]) {
                             row[field] = CryptoJS.AES.decrypt(row[field].toString(), gdprKey);
                             row[field] = row[field].toString(CryptoJS.enc.Utf8);
                         }
                     });
-                }).bind(this);
+                });
             } else {
-                this.objects[obj[0]].gdpr.forEach(field => {
+                Db.self.objects[obj[0]].gdpr.forEach(field => {
                     if (resp[field]) {
                         resp[field] = CryptoJS.AES.decrypt(resp[field].toString(), gdprKey);
                         resp[field] = resp[field].toString(CryptoJS.enc.Utf8);
@@ -79,8 +79,6 @@ Db.prototype.send = (...obj) => {
             }
         }
         return resp;
-    }).bind(this);
+    });
 }
-
-
 module.exports = Db;

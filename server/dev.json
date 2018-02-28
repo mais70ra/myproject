@@ -41,7 +41,20 @@
 	"httpserver": {
 		"port": 3000,
 		"publicPath": "/ui/",
-		"errorLog": "trace"
+		"errorLog": "trace",
+		"permission": {
+			"loginMethod": "user.login",
+			"logoutMethod": "user.logout",
+			"secret": "152soos012o",
+			"key": "test",
+			"proxy": "true",
+			"timeout": 3600000,
+			"memcachedStore": {
+				"host": "127.0.0.1",
+				"port": "8000",
+				"_secret": ""
+			}
+		}
 	},
 	"httpserver2": {
 		"port": 3001,

@@ -1,6 +1,5 @@
 var bus;
 var CryptoJS = require('crypto-js');
-var fieldsList = require('./definition').fieldsList;
 
 module.exports = {
     init: function(b) {
@@ -42,7 +41,14 @@ module.exports = {
                     })
                     .then(user => {
                         if (user[0]) {
-                            return user[0];
+                            return {
+                                data: {
+                                    user: user[0]
+                                },
+                                response: {
+                                    resultCode: 0
+                                }
+                            };
                         } else {
                             resp[0].loginAttempts = resp[0].loginAttempts + 1;
                             return bus.call('db.send', 'user', 'update', {

@@ -3,7 +3,10 @@ module.exports = {
     init: (b) => {
         bus = b;
     },
-    storeSession: (obj) => {
-        
+    storeSession: (msg) => {
+
+    },
+    check: (msg) => {
+
     }
 };
