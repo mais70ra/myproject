@@ -29,9 +29,9 @@ const requestMiddleware = store => next => action => {
   return fetch(effect.url || '/rpc', {
     method: effect.method || 'POST',
     credentials: 'include',
-    headers: {
+    headers: { 
       'content-type': 'application/json; charset=utf-8'
-    },
+    , ...effect.headers },
     body: effect.rawBody
       ? action.params
       : JSON.stringify({
@@ -103,7 +103,7 @@ const parseResponse = (res, action, effect) =>
 
       if (
         typeof res.error.type === 'string' &&
-        res.error.type.indexOf('identity.' > -1)
+        res.error.type.indexOf('identity.') > -1
       ) {
         hardLogout();
       }

@@ -1,50 +1,62 @@
 import React, { Component } from 'react';
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
-import { grey50 } from 'material-ui/styles/colors';
+import { withStyles } from 'material-ui/styles';
+import Dialog, {
+  DialogActions,
+  DialogContent,
+  DialogTitle
+} from 'material-ui/Dialog';
+import Button from 'material-ui/Button';
+import styles from './styles';
 
-export default class PhotoPreview extends Component {
+class PhotoPreview extends Component {
+  constructor(props) {
+    super(props);
+
+    const { customStyles = {} } = props;
+
+    this.DialogTitle = withStyles(customStyles.title || styles.title)(
+      DialogTitle
+    );
+    this.DialogContent = withStyles(customStyles.content || styles.content)(
+      DialogContent
+    );
+    this.DialogActions = withStyles(customStyles.actions || styles.actions)(
+      DialogActions
+    );
+  }
+
   render() {
     return (
       <Dialog
         open={this.props.open}
         title={this.props.title}
-        repositionOnUpdate
-        autoDetectWindowHeight
-        autoScrollBodyContent
-        contentStyle={{
-          width: '90%',
-          height: '90%',
-          maxWidth: '90% !important',
-          maxHeight: '90% !important'
-        }}
-        titleStyle={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          background: grey50
-        }}
-        actions={[
-          <FlatButton
-            label="Close"
-            primary={true}
-            onClick={this.props.onClose}
-          />
-        ]}
-        onRequestClose={this.props.onClose}
+        aria-labelledby="photo-preview-title"
+        onClose={this.props.onClose}
       >
-        <img
-          src={this.props.src}
-          alt={this.props.missingPhotoMessage}
-          style={{
-            objectFit: 'contain',
-            maxWidth: '100%',
-            width: '100%',
-            height: 'auto',
-            ...this.props.imageStyle
-          }}
-        />
+        <this.DialogTitle id="photo-preview-title">
+          {this.props.title}
+        </this.DialogTitle>
+        <this.DialogContent>
+          <img
+            src={this.props.src}
+            alt={this.props.missingPhotoMessage}
+            style={{
+              objectFit: 'contain',
+              maxWidth: '100%',
+              width: '100%',
+              height: 'auto',
+              ...this.props.imageStyle
+            }}
+          />
+        </this.DialogContent>
+        <this.DialogActions>
+          <Button color="primary" autoFocus onClick={this.props.onClose}>
+            Close
+          </Button>
+        </this.DialogActions>
       </Dialog>
     );
   }
 }
+
+export default withStyles(styles)(PhotoPreview);

@@ -1,28 +1,24 @@
 import React from 'react';
 
-import TextField from 'material-ui/TextField';
+import TextField from '../Components/TextField';
 import Checkbox from 'material-ui/Checkbox';
-import SelectField from 'material-ui/SelectField';
-import DatePicker from 'material-ui/DatePicker';
-import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
-import MenuItem from 'material-ui/MenuItem';
+import Select from '../Components/Select';
+import DatePicker from '../Components/DatePicker';
+import Radio from '../Components/Radio';
 import { Field } from 'redux-form';
 import ContentBox from '../Components/ContentBox';
 import PhotoContainer from '../Components/PhotoContainer';
 import { Row, Col, ScreenClassRender } from 'react-grid-system';
-import { grey400, grey300, red500 } from 'material-ui/styles/colors';
 
 export const renderTextField = ({
   input,
-  label,
   meta: { touched, error },
   ...custom
 }) => (
   <TextField
-    hintText={label}
-    floatingLabelText={label}
-    errorText={touched && error}
-    fullWidth
+    helperText={touched && error}
+    error={!!(touched && error)}
+    floatingLabel
     {...input}
     {...custom}
   />
@@ -34,97 +30,50 @@ export const renderRadioButtons = ({
   meta: { touched, error },
   ...custom
 }) => (
-  <div>
-    <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'start',
-        flexWrap: 'wrap',
-        marginTop: 10,
-        width: '100%',
-        borderBottom: touched && error ? '1.5px solid' : '1px solid',
-        borderBottomColor: touched && error ? red500 : grey300
-      }}
-    >
-      <span style={{ color: grey400 }}>{label}</span>
-      <RadioButtonGroup
-        fullWidth
-        {...input}
-        valueSelected={input.value || undefined}
-        onChange={(e, value) => {
-          input.onBlur(undefined, true);
-          input.onChange(value);
-        }}
-        style={{
-          display: 'flex',
-          marginTop: 10,
-          marginBottom: 10,
-          justifyContent: 'start',
-          flexWrap: 'wrap',
-          width: '100%'
-        }}
-        {...custom}
-      >
-        {(custom.options || []).map((x, idx) => {
-          const { key, value, ...rest } = x;
-          return (
-            <RadioButton
-              key={idx}
-              value={key}
-              label={value}
-              style={{ display: 'inline-block' }}
-              labelStyle={{ color: grey400 }}
-              iconStyle={{ fill: grey400 }}
-              {...rest}
-            />
-          );
-        })}
-      </RadioButtonGroup>
-    </div>
-    {touched &&
-      error && (
-        <div style={{ marginTop: 5 }}>
-          <span style={{ color: red500, fontSize: 12 }}>{error}</span>
-        </div>
-      )}
-  </div>
+  <Radio
+    label={label}
+    error={!!(touched && error)}
+    helperText={touched && error}
+    {...input}
+    onChange={(e, value) => {
+      input.onBlur(undefined, true);
+      input.onChange(value);
+    }}
+    {...custom}
+  />
 );
 
-export const renderCheckbox = ({ input, label }) => (
-  <Checkbox label={label} checked={!!input.value} onCheck={input.onChange} />
-);
+export const renderCheckbox = ({ input, label }) =>
+  null && (
+    <Checkbox label={label} checked={!!input.value} onCheck={input.onChange} />
+  );
 
 export const renderSelectField = ({
   input,
   label,
   meta: { touched, error },
-  children,
+  onCascade,
   ...custom
-}) => (
-  <SelectField
-    hintText={label}
-    floatingLabelText={label}
-    errorText={touched && error}
-    {...input}
-    onBlur={() => input.onBlur(undefined, true)}
-    value={input.value || custom.defaultValue || null}
-    onChange={(event, target, value) => {
-      input.onChange(value);
-      input.onBlur(undefined, true);
-    }}
-    fullWidth
-    {...custom}
-  >
-    <MenuItem
-      value={custom.defaultValue || null}
-      primaryText={custom.defaultText}
+}) => {
+  return (
+    <Select
+      label={label}
+      helperText={touched && error}
+      error={!!(touched && error)}
+      floatingLabel
+      {...input}
+      onChange={e => {
+        input.onChange(e.target.value);
+        if (onCascade) {
+          onCascade(e.target.value);
+        }
+      }}
+      onBlur={() => input.onBlur(undefined, true)}
+      value={input.value || custom.defaultValue || null}
+      {...custom}
     />
-    {(custom.options || []).map((x, idx) => (
-      <MenuItem key={idx} value={x.key} primaryText={x.value} />
-    ))}
-  </SelectField>
-);
+  );
+};
 
 export const renderDateField = ({
   input,
@@ -133,13 +82,18 @@ export const renderDateField = ({
   ...custom
 }) => (
   <DatePicker
+    error={!!(touched && error)}
+    helperText={touched && error}
     {...input}
-    floatingLabelText={label}
-    onChange={(e, date) => input.onChange(formatDate(date))}
-    value={input.value ? new Date(input.value) : null}
+    format="YYYY-MM-DD"
+    label={label}
+    clearable
+    autoOk
+    onChange={value => input.onChange(value)}
+    onBlur={value => input.onBlur(undefined, true)}
+    value={input.value || null}
+    floatingLabel
     fullWidth
-    errorText={touched && error}
-    textFieldStyle={{ cursor: 'pointer' }}
     {...custom}
   />
 );
@@ -207,7 +161,7 @@ const chooseFieldRenderer = type => {
   }
 };
 
-export const contentBoxMapper = boxes =>
+export const contentBoxMapper = (boxes, props) =>
   (boxes || [])
     .filter(
       box => box.inputs && box.inputs.length && box.inputs.some(x => x.show)
@@ -216,20 +170,46 @@ export const contentBoxMapper = boxes =>
       <Col key={idx} style={{ marginBottom: 15 }} {...box.colProps}>
         <ContentBox {...box.boxProps}>
           {(box.inputs || []).filter(x => x.show).map((x, idx) => {
-            const { inputType, show, render, ...rest } = x;
+            const {
+              inputType,
+              show,
+              render,
+              cascade,
+              cascadeFetch,
+              cascadeClear,
+              ...rest
+            } = x;
+            const isLastElement = idx >= box.inputs.length - 1;
+            if (cascade) {
+              rest.onCascade = value => {
+                for (const field of cascade) {
+                  props.change(field, null);
+                  if (cascadeClear) {
+                    cascadeClear(field);
+                  }
+                }
+
+                if (value && cascadeFetch) {
+                  cascadeFetch(cascade[0], value);
+                }
+              };
+            }
+
             return (
-              <Row key={idx}>
-                <Col xs={12} {...x.colProps}>
-                  {render ? (
-                    render(x)
-                  ) : (
-                    <Field
-                      component={chooseFieldRenderer(inputType)}
-                      {...rest}
-                    />
-                  )}
-                </Col>
-              </Row>
+              <div key={idx}>
+                <Row style={{ marginTop: 5, marginBottom: 5 }}>
+                  <Col xs={12} {...x.colProps}>
+                    {render ? (
+                      render(x, idx, props)
+                    ) : (
+                      <Field
+                        component={chooseFieldRenderer(inputType)}
+                        {...rest}
+                      />
+                    )}
+                  </Col>
+                </Row>
+              </div>
             );
           })}
         </ContentBox>
@@ -259,18 +239,56 @@ export const base64ToBlob = base64 => {
   return new Blob([ia], { type: mimeString });
 };
 
-export const formatDate = date => {
-  if (!date) {
-    return date;
-  }
+export const getAddressGeocode = data => {
+  return Promise.resolve({});
 
-  const d = date instanceof Date ? date : new Date(date);
-  const year = String(d.getFullYear());
-  let month = String(d.getMonth() + 1);
-  let day = String(d.getDate());
+  // if (!process.env.REACT_APP_GOOGLE_MAPS_API_KEY) {
+  //   return Promise.resolve({});
+  // }
 
-  if (month.length < 2) month = '0' + month;
-  if (day.length < 2) day = '0' + day;
+  // const address = [];
+  // if (data.addressZone1) {
+  //   address.push(data.addressZone1);
+  // }
+  // if (data.addressZone2) {
+  //   address.push(data.addressZone2);
+  // }
+  // if (data.addressZone3) {
+  //   address.push(data.addressZone3);
+  // }
+  // if (data.addressZone4) {
+  //   address.push(data.addressZone4);
+  // }
+  // if (data.address) {
+  //   address.push(data.address);
+  // }
 
-  return `${year}-${month}-${day}`;
+  // const stringifiedAddress = address.length
+  //   ? encodeURIComponent(address.join(','))
+  //   : null;
+
+  // const promise = stringifiedAddress
+  //   ? fetch(
+  //       `https://maps.googleapis.com/maps/api/geocode/json?address=${stringifiedAddress}&key=${
+  //         process.env.REACT_APP_GOOGLE_MAPS_API_KEY
+  //       }`
+  //     )
+  //   : Promise.resolve({});
+
+  // return promise
+  //   .then(res => {
+  //     if (res.ok) {
+  //       return res.json();
+  //     }
+  //     return Promise.resolve({});
+  //   })
+  //   .then(
+  //     res =>
+  //       (res.results &&
+  //         res.results[0] &&
+  //         res.results[0].geometry &&
+  //         res.results[0].geometry.location) ||
+  //       {}
+  //   )
+  //   .catch(() => {});
 };

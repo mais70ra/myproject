@@ -3,15 +3,16 @@ import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 
-import RaisedButton from 'material-ui/RaisedButton';
-import CircularProgress from 'material-ui/CircularProgress';
+import Button from 'material-ui/Button';
+import { CircularProgress } from 'material-ui/Progress';
 
 import { renderTextField } from '../../Common/helpers';
 import { required, matchesField } from '../../Common/validations';
 
-import ContentBox from '../../Components/ContentBox';
-import { Row, Col } from 'react-grid-system';
-import muiThemeable from 'material-ui/styles/muiThemeable';
+import { clearChangePassword } from './duck';
+import Paper from 'material-ui/Paper';
+import { Container, Row, Col } from 'react-grid-system';
+import { withTheme } from 'material-ui/styles';
 
 class LoginForm extends Component {
   componentWillMount() {
@@ -20,55 +21,71 @@ class LoginForm extends Component {
 
   render() {
     const { handleSubmit, pristine, submitting } = this.props;
+    const style = this.props.theme.custom.login;
 
     return (
       <form onSubmit={handleSubmit}>
-        <ContentBox
-          title='System Login'
-        >
-          <Row align="center">
-            <Col style={{ marginTop: 15 }} align="center" xs={12}>
-              {this.props.requests > 0 && (
-                <CircularProgress
-                  color={this.props.muiTheme.palette.accent1Color}
-                  size={40}
+        <Paper elevation={0}>
+          <Container>
+            <Row align="center">
+              <Col align="center">
+                <h2 style={style.title}>
+                Change Password
+                </h2>
+              </Col>
+            </Row>
+            <Row align="center">
+              <Col align="center" xs={12}>
+                {this.props.requests > 0 && (
+                  <CircularProgress color="primary" size={40} />
+                )}
+              </Col>
+            </Row>
+            <Row align="center">
+              <Col align="center" offset={{ xs: 1 }} xs={10}>
+                <Field
+                  name="username"
+                  component={renderTextField}
+                  floatingLabel
+                  label="Username"
+                  validate={[required]}
                 />
-              )}
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={12}>
-              <Field
-                name="username"
-                component={renderTextField}
-                label="Username"
-                validate={[required]}
-              />
-            </Col>
-            <Col xs={12}>
-              <Field
-                name="password"
-                type="password"
-                component={renderTextField}
-                label="Password"
-                validate={[required]}
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col style={{ marginBottom: 15 }} align="center" xs={12}>
-              <RaisedButton
-                label="Submit"
-                type="submit"
-                primary
-                disabled={pristine || submitting}
-                style={{ marginTop: '1em' }}
-              />
-            </Col>
-          </Row>
-        </ContentBox>
+              </Col>
+              <Col align="center" offset={{ xs: 1 }} xs={10}>
+                <Field
+                  name="password"
+                  type="password"
+                  component={renderTextField}
+                  floatingLabel
+                  label="Password"
+                  validate={[required]}
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col
+                style={{ marginBottom: 15 }}
+                offset={{ xs: 1 }}
+                align="center"
+                xs={10}
+              >
+                <Button
+                  type="submit"
+                  raised
+                  fullWidth
+                  color="primary"
+                  disabled={pristine || submitting}
+                  style={{ marginTop: '1em' }}
+                >
+                  Submit
+                </Button>
+              </Col>
+            </Row>
+          </Container>
+        </Paper>
       </form>
     );
+
   }
 }
 
@@ -86,4 +103,4 @@ export default connect(
   state => ({
     requests: state.online.requests
   })
-)(muiThemeable()(form));
+)(withTheme()(form));

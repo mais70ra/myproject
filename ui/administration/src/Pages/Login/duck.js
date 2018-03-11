@@ -3,6 +3,7 @@ import { RESET_STATE } from '@redux-offline/redux-offline/lib/constants';
 const LOGIN = 'LOGIN';
 const LOGIN_COMMIT = 'LOGIN_COMMIT';
 const LOGIN_ROLLBACK = 'LOGIN_ROLLBACK';
+const CHECK_SESSION_NO_COOKIE = 'CHECK_SESSION_NO_COOKIE';
 export const LOGOUT = 'LOGOUT';
 
 const defaultState = {
@@ -17,6 +18,12 @@ const parseLogin = action => {
 
 export default (state = defaultState, action) => {
   switch (action.type) {
+    case CHECK_SESSION_NO_COOKIE:
+      return {
+        ...state,
+        currentUser: null,
+        sessionChecked: true
+      };
     case LOGIN_COMMIT:
       return { ...state, currentUser: parseLogin(action) };
     case LOGOUT:
@@ -52,3 +59,7 @@ export const logout = () => dispatch => {
     type: RESET_STATE
   });
 };
+
+export const checkSessionNoCookie = () => ({
+  type: CHECK_SESSION_NO_COOKIE
+});

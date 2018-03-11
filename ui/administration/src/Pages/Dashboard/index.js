@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { changeRoute } from '../../Common/duck';
 import { Container, Row, Col } from 'react-grid-system';
-import { grey500 } from 'material-ui/styles/colors';
-import RaisedButton from 'material-ui/RaisedButton';
+import { grey } from 'material-ui/colors';
+import Button from 'material-ui/Button';
 
 class Dashboard extends Component {
   render() {
@@ -11,33 +11,38 @@ class Dashboard extends Component {
       <Container>
         <Row style={{ marginBottom: 15 }} align="center">
           <Col align="center" xs={12}>
-            <h1 style={{ color: grey500 }}>
+            <h1 style={{ color: grey[500] }}>
               Welcome. Please select one from below.
             </h1>
           </Col>
         </Row>
         <Row style={{ marginBottom: 15 }} align="center">
           <Col align="center" xs={12}>
-            <RaisedButton
-              label="Register New User"
+            <Button
+              raised
               onClick={() => this.props.changeRoute('/user/create')}
               fullWidth
-              primary
-            />
+              color="primary"
+            >
+              Register New User
+            </Button>
           </Col>
         </Row>
         <Row align="center">
           <Col align="center" xs={12}>
-            <RaisedButton
-              label="List users"
-              onClick={() => this.props.changeRoute('/user.list')}
+            <Button
+              raised
+              onClick={() => this.props.changeRoute('/user/list')}
               fullWidth
-              primary
-            />
+              color="primary"
+            >
+              List Users
+            </Button>
           </Col>
         </Row>
       </Container>
     );
   }
 }
+
 export default connect(state => ({}), { changeRoute })(Dashboard);

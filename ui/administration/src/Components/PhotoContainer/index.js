@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import FlatButton from 'material-ui/FlatButton';
+import Button from 'material-ui/Button';
 import PhotoPreview from '../PhotoPreview';
 
 export default class PhotoContainer extends Component {
@@ -19,29 +19,31 @@ export default class PhotoContainer extends Component {
         <div style={{ marginBottom: 15 }}>
           <label>{this.props.label}</label>
         </div>
-        <img
-          style={{
-            objectFit: 'contain',
-            maxWidth: '100%',
-            maxHeight: '100%',
-            width: 'auto',
-            height: 'auto',
-            cursor: 'pointer',
-            marginBottom: 10,
-            ...this.props.imageStyle
-          }}
-          onClick={() => this.setState({ previewOpen: true })}
-          alt={this.props.missingPhotoMessage}
-          src={this.props.input.value}
-          {...this.props.imageProps}
-        />
-        <FlatButton
-          containerElement="label"
-          primary
+        {this.props.input.value && (
+          <img
+            style={{
+              objectFit: 'contain',
+              maxWidth: '100%',
+              maxHeight: '100%',
+              width: 'auto',
+              height: 'auto',
+              cursor: 'pointer',
+              marginBottom: 10,
+              ...this.props.imageStyle
+            }}
+            onClick={() => this.setState({ previewOpen: true })}
+            alt={this.props.missingPhotoMessage}
+            src={this.props.input.value}
+            {...this.props.imageProps}
+          />
+        )}
+        <Button
+          component="label"
+          color="primary"
           fullWidth
-          label={this.props.buttonText || 'Upload Photo'}
           {...this.props.buttonProps}
         >
+          {this.props.buttonText || 'Upload Photo'}
           <input
             onChange={e => {
               const file = e.target.files[0];
@@ -52,9 +54,6 @@ export default class PhotoContainer extends Component {
                   this.props.input.onBlur(undefined, true);
                   this.props.input.onChange(f.target.result);
                 };
-              } else {
-                this.props.input.onBlur(undefined, true);
-                this.props.input.onChange(null);
               }
             }}
             style={{ display: 'none', ...this.props.fileInputStyle }}
@@ -63,7 +62,7 @@ export default class PhotoContainer extends Component {
             accept="image/*"
             {...this.props.fileInputProps}
           />
-        </FlatButton>
+        </Button>
         <PhotoPreview
           missingPhotoMessage={this.props.missingPhotoMessage}
           title={this.props.label}

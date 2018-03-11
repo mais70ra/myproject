@@ -1,7 +1,6 @@
 import { push, goBack, goForward } from 'react-router-redux';
-import { RESET_STATE } from '@redux-offline/redux-offline/lib/constants';
 import { LOGOUT } from '../Pages/Login/duck';
-import { getStore } from '../Setup/store';
+import store from '../Setup/store';
 import { base64ToBlob } from './helpers';
 
 export const changeRoute = route => dispatch => dispatch(push(route));
@@ -97,7 +96,7 @@ export const dialog = (state = { statusesQueue: [] }, action) => {
 };
 
 export const showDialog = (message, isError) =>
-  getStore().dispatch({
+  store.dispatch({
     type: SHOW_DIALOG,
     message,
     isError
@@ -112,12 +111,8 @@ export const resetDialog = () => ({
 });
 
 export const hardLogout = () => {
-  getStore().dispatch({
+  store.dispatch({
     type: LOGOUT
-  });
-
-  getStore().dispatch({
-    type: RESET_STATE
   });
 };
 

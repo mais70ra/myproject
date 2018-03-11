@@ -2,27 +2,28 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar';
-import FlatButton from 'material-ui/FlatButton';
+import { withStyles } from 'material-ui/styles';
+import Toolbar from 'material-ui/Toolbar';
+import AppBar from 'material-ui/AppBar';
+import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
-import SettingsIcon from 'material-ui/svg-icons/action/settings';
-import MenuIcon from 'material-ui/svg-icons/navigation/menu';
-import WifiIcon from 'material-ui/svg-icons/notification/wifi';
-import WifiOffIcon from 'material-ui/svg-icons/notification/network-check';
-import MenuItem from 'material-ui/MenuItem';
-import IconMenu from 'material-ui/IconMenu';
+import SettingsIcon from 'material-ui-icons/Settings';
+import MenuIcon from 'material-ui-icons/Menu';
+import Menu, { MenuItem } from 'material-ui/Menu';
 import Divider from 'material-ui/Divider';
-import { lightGreenA200, redA200, white } from 'material-ui/styles/colors';
+import { lightGreen, red } from 'material-ui/colors';
+
+import { ScreenClassRender } from 'react-grid-system';
+import { LinearProgress } from 'material-ui/Progress';
 
 import { changeRoute } from '../../Common/duck';
 import { logout } from '../Login/duck';
 
-import { ScreenClassRender } from 'react-grid-system';
-import LinearProgress from 'material-ui/LinearProgress';
-import muiThemeable from 'material-ui/styles/muiThemeable';
-// let fetchDropdowns = () => {
-
-// };
+const styles = ({ palette }) => ({
+  contrast: {
+    color: palette.primary.contrastText
+  }
+});
 
 
 class Header extends Component {
@@ -34,114 +35,80 @@ class Header extends Component {
     // this.props.fetchDropdowns();
   };
 
+  handleMenu = e =>
+  this.setState({ anchorEl: e.currentTarget, open: e.currentTarget.id });
+
+  handleClose = () => this.setState({ anchorEl: null, open: '' });
+
+  changeRoute = route => {
+    this.handleClose();
+    this.props.changeRoute(route);
+  };
+
   render() {
+    const { anchorEl, open } = this.state;
+    const { classes } = this.props;
+
     return (
       <div>
-        <Toolbar>
-          <ToolbarGroup>
+        <AppBar position="static">
+          <Toolbar>
             <ScreenClassRender
               render={screenClass => {
                 if (screenClass === 'xs' || screenClass === 'sm') {
                   return (
-                    <IconMenu
-                      iconButtonElement={
-                        <IconButton
-                          style={{ width: 56, height: 56, padding: 12 }}
-                          iconStyle={{ width: 28, height: 28 }}
-                        >
-                          <MenuIcon color={white} />
-                        </IconButton>
-                      }
-                      anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-                      targetOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-                    >
-                      <MenuItem
-                        primaryText="Create user"
-                        onTouchTap={() =>
-                          this.props.changeRoute('/user/create')
-                        }
-                      />
-                      <Divider />
-                      <MenuItem
-                        primaryText="List users"
-                        onTouchTap={() => this.props.changeRoute('/user/list')}
-                      />
-                    </IconMenu>
+                    <IconButton className={classes.contrast} id="user" onClick={this.handleMenu}>
+                      <MenuIcon />
+                    </IconButton>
                   );
                 }
 
                 return (
-                  <IconMenu
-                    open={this.state.openMenu === 'user'}
-                    iconButtonElement={
-                      <FlatButton
-                        label="Users"
-                        primary
-                        labelStyle={{ color: white }}
-                        style={{ height: 56 }}
-                      />
-                    }
-                    onRequestChange={() =>
-                      this.state.openMenu === 'user'
-                        ? this.setState({ openMenu: '' })
-                        : this.setState({ openMenu: 'user' })
-                    }
-                    anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-                    targetOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-                  >
-                    <MenuItem
-                      primaryText="Create user"
-                      onTouchTap={() =>
-                        this.props.changeRoute('/user/create')
-                      }
-                    />
-                    <Divider />
-                    <MenuItem
-                      primaryText="List users"
-                      onTouchTap={() => this.props.changeRoute('/user/list')}
-                    />
-                  </IconMenu>
+                  <Button className={classes.contrast} id="user" onClick={this.handleMenu}>
+                    Users
+                  </Button>
                 );
               }}
             />
-          </ToolbarGroup>
-          <ToolbarGroup>
-            {this.props.isOnline ? (
-              <WifiIcon style={{ color: lightGreenA200 }}>
-                Online
-              </WifiIcon>
-            ) : (
-              <WifiOffIcon style={{ color: redA200 }}>
-                Offline
-              </WifiOffIcon>
-            )}
-            <IconMenu
-              iconButtonElement={
-                <IconButton
-                  style={{ width: 56, height: 56, padding: 12 }}
-                  iconStyle={{ width: 28, height: 28 }}
-                >
-                  <SettingsIcon color={white} />
-                </IconButton>
-              }
-              anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-              targetOrigin={{ horizontal: 'left', vertical: 'top' }}
+            <Menu
+              open={open === 'user'}
+              onClose={this.handleClose}
+              anchorEl={anchorEl}
             >
               <MenuItem
-                primaryText="Settings"
-                onTouchTap={() => this.props.changeRoute('/settings')}
-              />
+                onTouchTap={() => this.changeRoute('/user/create')}
+              >
+                Create User
+              </MenuItem>
               <Divider />
-              <MenuItem primaryText="Logout" onTouchTap={this.props.logout} />
-            </IconMenu>
-          </ToolbarGroup>
-        </Toolbar>
+              <MenuItem onTouchTap={() => this.changeRoute('/user/list')}>
+                List Users
+              </MenuItem>
+            </Menu>
+            <div style={{ flex: 1 }} />
+            <IconButton className={classes.contrast} id="settings" onClick={this.handleMenu}>
+              <SettingsIcon />
+            </IconButton>
+            <Menu
+              open={open === 'settings'}
+              onClose={this.handleClose}
+              anchorEl={anchorEl}
+            >
+              <MenuItem onTouchTap={() => this.changeRoute('/settings')}>
+                Settings
+              </MenuItem>
+              <Divider />
+              <MenuItem onTouchTap={this.props.logout}>Logout</MenuItem>
+            </Menu>
+          </Toolbar>
+        </AppBar>
+
         <LinearProgress
           style={{
             backgroundColor: 'inherit',
             visibility: this.props.requests > 0 ? 'inherit' : 'hidden'
           }}
-          color={this.props.muiTheme.palette.accent1Color}
+          color="secondary"
         />
       </div>
     );
@@ -155,8 +122,7 @@ Header.propTypes = {
 
 export default connect(
   state => ({
-    isOnline: state.offline.online,
     requests: state.online.requests
   }),
-  { changeRoute, logout } // , fetchDropdowns
-)(muiThemeable()(Header));
+  { changeRoute, logout }
+)(withStyles(styles)(Header));

@@ -37,3 +37,21 @@ export const email = value => {
 
 export const matchesField = (field, message) => (value, fields) =>
   value === fields[field] ? undefined : message;
+
+export const length = (minLength, maxLength, errorMessage) => value => {
+  if (!value) return undefined;
+  if (minLength && !maxLength && value.length >= minLength) {
+    return undefined;
+  } else if (maxLength && !minLength && value.length <= maxLength) {
+    return undefined;
+  } else if (
+    maxLength &&
+    minLength &&
+    value.length >= minLength &&
+    value.length <= maxLength
+  ) {
+    return undefined;
+  }
+
+  return errorMessage || 'Length is not valid.';
+};
