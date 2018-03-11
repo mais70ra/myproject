@@ -1,0 +1,234 @@
+{
+	"info": {
+		"name": "Savetime - bg",
+		"_postman_id": "5f0b82e7-44e4-9877-7793-9a7f12ac7441",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json; charset=utf-8"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n \"jsonrpc\": \"2.0\",\n \"id\": \"1\",\n \"method\": \"user.login\",\n \"params\": {\n   \"username\": \"admin\",\n   \"password\": \"123\"\n }\n}\n"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/rpc",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"rpc"
+					]
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "User logout",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json; charset=utf-8"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n \"jsonrpc\": \"2.0\",\n \"id\": \"1\",\n \"method\": \"user.logout\",\n \"params\": {\n\n }\n}\n"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/rpc",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"rpc"
+					]
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "User add",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json; charset=utf-8"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n \"jsonrpc\": \"2.0\",\n \"id\": \"1\",\n \"method\": \"user.add\",\n \"params\": {\n   \"username\": \"admin\",\n   \"password\": \"123\",\n   \"email\": \"admin2@gmail.bg\",\n   \"phone\": \"0873829733\",\n   \"firstName\": \"Admin\",\n   \"lastName\": \"Admin\",\n   \"middleName\": \"1111ddd\"\n }\n}\n"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/rpc",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"rpc"
+					]
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "User get",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json; charset=utf-8"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n \"jsonrpc\": \"2.0\",\n \"id\": \"1\",\n \"method\": \"user.findAll\",\n \"params\": {\n\t\n }\n}\n"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/rpc",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"rpc"
+					]
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "Role add",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json; charset=utf-8"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n \"jsonrpc\": \"2.0\",\n \"id\": \"1\",\n \"method\": \"role.add\",\n \"params\": {\n   \"name\": \"mymbsTeller1\",\n   \"password\": \"123\",\n   \"channel\": \"web\"\n }\n}\n"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/rpc",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"rpc"
+					]
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "Product add",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json; charset=utf-8"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n \"jsonrpc\": \"2.0\",\n \"id\": \"1\",\n \"method\": \"product.add\",\n \"params\": {\n   \"name\": \"product\",\n   \"description\": \"product\",\n   \"price\": 10\n }\n}\n"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/rpc",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"rpc"
+					]
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "Product find all",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json; charset=utf-8"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n \"jsonrpc\": \"2.0\",\n \"id\": \"1\",\n \"method\": \"product.findAll\",\n \"params\": {\n   \n }\n}\n"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/rpc",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"rpc"
+					]
+				},
+				"description": null
+			},
+			"response": []
+		}
+	]
+}

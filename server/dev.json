@@ -8,7 +8,7 @@
 	},
 	"db": {
 		"credentinals": {
-			"database": "myProject",
+			"database": "savetime-bg",
 			"username": "postgres",
 			"password": "123"
 		},
@@ -26,7 +26,7 @@
 		"port": 3000,
 		"publicPath": "/ui/administration/build/",
 		"errorLog": "trace",
-		"permission": {
+		"_permission": {
 			"loginMethod": "user.login",
 			"logoutMethod": "user.logout",
 			"secret": "152soos012o",

@@ -1,13 +1,5 @@
 module.exports = {
     name: 'user',
-    fieldsList: [
-        'username',
-        'firstName',
-        'middleName',
-        'email',
-        'loginAttempts',
-        'status'
-    ],
     fields: [{
         name: 'username',
         define: {
