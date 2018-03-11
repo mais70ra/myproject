@@ -26,7 +26,7 @@
 		"port": 3000,
 		"publicPath": "/ui/administration/build/",
 		"errorLog": "trace",
-		"_permission": {
+		"permission": {
 			"loginMethod": "user.login",
 			"logoutMethod": "user.logout",
 			"secret": "152soos012o",

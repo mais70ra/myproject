@@ -5,6 +5,7 @@ docs
 log/
 .idea
 *.DS_Store
+.DS_Store
 *.marko.js
 .ut_standard_devrc
 dist
