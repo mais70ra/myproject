@@ -6,7 +6,7 @@ const SessionHandler = require('../session');
 var sessionHandler;
 
 const helper = require("./helper");
-const log = require("../log");
+const log = require("../logger");
 const err = require("../error");
 
 function Httpserver(bus) {

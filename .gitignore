@@ -2,7 +2,7 @@ node_modules
 docs
 .tern*
 .history
-*.log
+log/
 .idea
 *.marko.js
 .ut_standard_devrc
