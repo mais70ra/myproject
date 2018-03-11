@@ -40,7 +40,7 @@
 	},
 	"httpserver": {
 		"port": 3000,
-		"publicPath": "/ui/",
+		"publicPath": "/ui/administration/build/",
 		"errorLog": "trace",
 		"permission": {
 			"loginMethod": "user.login",
@@ -49,6 +49,7 @@
 			"key": "test",
 			"proxy": "true",
 			"timeout": 3600000,
+			"comment": "memcached -p 8000",
 			"memcachedStore": {
 				"host": "127.0.0.1",
 				"port": "8000",

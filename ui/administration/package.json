@@ -1,0 +1,36 @@
+{
+  "name": "administration",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@redux-offline/redux-offline": "^2.2.0",
+    "axios": "^0.17.1",
+    "babel-polyfill": "^6.26.0",
+    "deepmerge": "2.0.1",
+    "history": "^4.7.2",
+    "immutability-helper": "2.6.0",
+    "lodash.get": "4.4.2",
+    "material-ui": "^0.19.4",
+    "material-ui-pagination": "1.1.6",
+    "prop-types": "^15.6.0",
+    "react": "^16.1.1",
+    "react-browser-detection": "1.0.4",
+    "react-dom": "^16.1.1",
+    "react-grid-system": "^3.1.0",
+    "react-redux": "^5.0.6",
+    "react-router-redux": "^5.0.0-alpha.8",
+    "react-scripts": "1.0.17",
+    "react-tap-event-plugin": "^3.0.2",
+    "redux": "^3.7.2",
+    "redux-form": "^7.1.2",
+    "redux-thunk": "^2.2.0",
+    "validator": "9.1.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "proxy": "http://localhost:3000"
+}
