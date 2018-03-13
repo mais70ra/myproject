@@ -14,7 +14,7 @@ module.exports = {
             limit: msg.limit || 10
         });
     },
-    add: function(msg) {
+    create: function(msg) {
         msg.loginAttempts = 0;
         msg.password = CryptoJS.MD5(msg.password).toString();
         return bus.call('db.send', 'user', 'create', msg)

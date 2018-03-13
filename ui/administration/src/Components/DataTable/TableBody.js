@@ -40,7 +40,7 @@ class TableBodyWrapper extends Component {
       selected,
       ...rest
     } = this.props;
-
+    console.log(data);
     return (
       <TableBody {...rest}>
         {!data.length && (

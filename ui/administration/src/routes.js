@@ -9,7 +9,7 @@ import Login from './Pages/Login';
 import Dashboard from './Pages/Dashboard';
 import Settings from './Pages/Settings';
 import UserList from './Pages/User/List';
-// import UserCreate from './Pages/User/Create';
+import UserCreate from './Pages/User/Create';
 // import UserEdit from './Pages/User/Edit';
 
 class Routes extends Component {
@@ -30,9 +30,9 @@ class Routes extends Component {
         <Container>
           <Switch>
             <Route exact path="/settings" component={Settings} />
-            {<Route exact path="/user/list" component={UserList} />
-            /*<Route exact path="/user/create" component={UserCreate} />
-            <Route exact path="/user/edit/:id" component={UserEdit} /> */}
+            <Route exact path="/user/list" component={UserList} />
+            <Route exact path="/user/create" component={UserCreate} />
+            {/*<Route exact path="/user/edit/:id" component={UserEdit} />*/}
             <Route path="/" component={Dashboard} />
           </Switch>
         </Container>

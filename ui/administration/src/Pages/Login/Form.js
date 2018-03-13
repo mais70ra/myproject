@@ -30,7 +30,7 @@ class LoginForm extends Component {
             <Row align="center">
               <Col align="center">
                 <h2 style={style.title}>
-                Change Password
+                Login
                 </h2>
               </Col>
             </Row>
