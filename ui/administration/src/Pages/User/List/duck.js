@@ -19,10 +19,9 @@ const defaultState = {
 export default (state = defaultState, action) => {
   switch (action.type) {
     case FETCH_USERS_COMMIT:
-      const pagination = get(action.payload, ['pagination', 0]);
-      const data = action.payload;
+      const pagination = get(action.payload, 'pagination', 1);
       return update(state, {
-        data: { $set: data },
+        data: { $set: action.payload.results },
         filters: {
           paging: {
             pageNumber: { $set: get(pagination, 'pageNumber', 1) },

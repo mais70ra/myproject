@@ -54,7 +54,17 @@ const requestMiddleware = store => next => action => {
             showDialog(body.message, true);
           }
           if (!effect.hideError && body.error && body.error.message) {
-            showDialog(body.error.message, true);
+            let message = body.error.message;
+            if (Array.isArray(body.error.errors)) {
+              body.error.errors.forEach((err, key) => {
+                if (key === 0) {
+                  message += ': ' + err.message;
+                } else {
+                  message += ', ' + err.message;
+                }
+              });
+            }
+            showDialog(message, true);
           }
           return Promise.reject(body);
         });

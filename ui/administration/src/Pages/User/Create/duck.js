@@ -23,7 +23,8 @@ export const userCreate = data => dispatch => {
                 },
                 commit: { type: CREATE_USER_COMMIT },
                 rollback: { type: CREATE_USER_ROLLBACK },
-            },
-        },
-    });
+            }
+        }
+    })
+    .then(() => dispatch(reset('userCreate')));
 };

@@ -9,9 +9,26 @@ module.exports = {
         return Promise.resolve(msg);
     },
     findAll: function(msg) {
-        return bus.call('db.send', 'user', 'findAll', {
-            offset: msg.page || 0,
-            limit: msg.limit || 10
+        msg.paging.pageSize = msg.paging.pageSize || 5;
+        msg.paging.pageNumber = msg.paging.pageNumber || 1;
+        return bus.call('db.send', 'user', 'findAndCountAll', {})
+        .then(data => {
+            let pages = Math.ceil(data.count / msg.paging.pageSize);
+            let offset = msg.paging.pageSize * (msg.paging.pageNumber - 1);
+            return bus.call('db.send', 'user', 'findAll', {
+                offset: offset,
+                limit: msg.paging.pageSize
+            })
+            .then(results => {
+                return {
+                    results: results,
+                    pagination: {
+                        pagesTotal: pages,
+                        recordsTotal: data.count,
+                        pageNumber: msg.paging.pageNumber
+                    }
+                };
+            });
         });
     },
     create: function(msg) {
