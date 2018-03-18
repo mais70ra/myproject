@@ -5,8 +5,8 @@ module.exports = {
         db: require('../db')
     },
     modules: {
-        user: require('../impl/user'),
-        product: require('../impl/product'),
-        role: require('../impl/role')
+        user: require('../modules/user'),
+        product: require('../modules/product'),
+        role: require('../modules/role')
     }
 };

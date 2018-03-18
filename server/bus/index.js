@@ -3,12 +3,10 @@ const bus = {};
 const log = (msg) => {
     console.log(msg);
 }
-const modules = require('../index').modules;
-const ports = require('../index').ports;
 const Db = require('./db');
 const Httpserver = require('./httpserver');
 
-const config = require('../dev.json');
+const config = require('../config');
 var trace = 0;
 
 var methodExist = (method) => {
@@ -75,7 +73,10 @@ var call = (...params) => {
 
 var app = {
     config: config,
-    init: () => {
+    init: (index) => {
+        const modules = require('../' + (index || 'index')).modules;
+        const ports = require('../' + (index || 'index')).ports;
+        let promises = [];
         bus.methods = {};
         var modulesKeys = Object.keys(modules);
         for (var mod in modulesKeys) {
@@ -107,39 +108,49 @@ var app = {
             }
         }
         for (mod in portsKeys) {
-            if (ports[portsKeys[mod]].type === 'httpserver') {
-                let httpserver = new Httpserver(Object.assign({}, app, {
-                    id: portsKeys[mod]
-                }));
-                httpserver.init(ports[portsKeys[mod]])
-                .then(() => {
-                    ports[portsKeys[mod]].init(Object.assign({}, app, {
+            promises.push((() => {
+                if (ports[portsKeys[mod]].type === 'httpserver') {
+                    let httpserver = new Httpserver(Object.assign({}, app, {
                         id: portsKeys[mod]
                     }));
-                });
-            } else if (ports[portsKeys[mod]].type === 'db') {
-                if (!Array.isArray(ports[portsKeys[mod]].definitions)) {
-                    throw new Error('Missing definitions in the db port ' + mod);
+                    return httpserver.init(ports[portsKeys[mod]])
+                    .then(() => {
+                        if (ports[portsKeys[mod]].init) {
+                            ports[portsKeys[mod]].init(Object.assign({}, app, {
+                                id: portsKeys[mod]
+                            }));
+                        }
+                        return Promise.resolve();
+                    });
+                } else if (ports[portsKeys[mod]].type === 'db') {
+                    if (!Array.isArray(ports[portsKeys[mod]].definitions)) {
+                        throw new Error('Missing definitions in the db port ' + mod);
+                    }
+                    let db = new Db(Object.assign({}, app, {
+                        id: portsKeys[mod]
+                    }));
+                    return db.init(JSON.parse(JSON.stringify(ports[portsKeys[mod]].definitions)))
+                    .then(() => {
+                        bus.methods[portsKeys[mod] + '.send'] = db.send;
+                        if (ports[portsKeys[mod]].init) {
+                            ports[portsKeys[mod]].init(Object.assign({}, app, {
+                                id: portsKeys[mod]
+                            }));
+                        }
+                        return Promise.resolve();
+                    });
+                } else {
+                    log({
+                        io: 'error',
+                        type: 'port',
+                        name: portsKeys[mod],
+                        e: 'Port type not found:' + ports[portsKeys[mod]].type
+                    });
+                    return Promise.reject('Port type not found:' + ports[portsKeys[mod]].type);
                 }
-                let db = new Db(Object.assign({}, app, {
-                    id: portsKeys[mod]
-                }));
-                db.init(JSON.parse(JSON.stringify(ports[portsKeys[mod]].definitions)))
-                .then(() => {
-                    bus.methods[portsKeys[mod] + '.send'] = db.send;
-                    ports[portsKeys[mod]].init(Object.assign({}, app, {
-                        id: portsKeys[mod]
-                    }));
-                });
-            } else {
-                log({
-                    io: 'error',
-                    type: 'port',
-                    name: portsKeys[mod],
-                    e: 'Port type not found:' + ports[portsKeys[mod]].type
-                });
-            }
+            })());
         }
+        return Promise.all(promises).then(app);
     },
     call: call,
     methodExist: methodExist

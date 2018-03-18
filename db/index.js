@@ -2,9 +2,9 @@
 module.exports = {
     type: 'db',
     definitions: [
-        require('../impl/user/definition'),
-        require('../impl/role/definition'),
-        require('../impl/product/definition'),
+        require('../modules/user/definition'),
+        require('../modules/role/definition'),
+        require('../modules/product/definition'),
     ],
     init: (b) => {
         
