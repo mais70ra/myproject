@@ -58,7 +58,7 @@
                 "DB_GDPR_KEY": "AiwZZM23a",
                 "DB_CRED_USERNAME": "postgres",
                 "DB_CRED_PASSWORD": "123",
-                "DB_NAME": "test",
+                "DB_NAME": "savetime-bg",
                 "DB_HOST": "localhost",
                 "DB_PORT": "5432",
                 "HTTP_SERVER_PORT": "3000",
