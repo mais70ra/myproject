@@ -9,7 +9,7 @@ module.exports = {
             allowNull: false,
             validate: {
                 len: [2, 25],
-                notNull: {msg: 'Username is required.'}
+                notNull: {msg: 'Middle name should be between 2 and 25 symbols long.'}
             }
         }
     }, {
@@ -26,7 +26,7 @@ module.exports = {
             allowNull: false,
             validate: {
                 len: [2, 25],
-                notNull: {msg: 'First name is required.'}
+                notNull: {msg: 'First name should be between 2 and 25 symbols long.'}
             }
         }
     }, {
@@ -55,8 +55,8 @@ module.exports = {
             unique: true,
             allowNull: true,
             validate: {
-                len: [5, 40],
-                isEmail: { msg: 'Invalid email.' }
+                len: [6, 50],
+                isEmail: { msg: 'Email should be between 6 and 50 symbols long' }
             }
         }
     }, {

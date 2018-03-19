@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { Container, Row, Col } from 'react-grid-system';
-import Button from 'material-ui/Button';
+import { Container } from 'react-grid-system';
+// import Button from 'material-ui/Button';
 
 class Settings extends Component {
   render() {

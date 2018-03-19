@@ -179,7 +179,6 @@ export const contentBoxMapper = (boxes, props) =>
               cascadeClear,
               ...rest
             } = x;
-            const isLastElement = idx >= box.inputs.length - 1;
             if (cascade) {
               rest.onCascade = value => {
                 for (const field of cascade) {

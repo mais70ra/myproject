@@ -5,55 +5,13 @@ import { reduxForm, getFormValues } from 'redux-form';
 import { grey500, white } from 'material-ui/colors';
 import { Container, Row, Col, ScreenClassRender } from 'react-grid-system';
 import { contentBoxMapper } from '../../../Common/helpers';
-import {
-    required,
-    integer,
-    alphanumeric,
-    length,
-    email,
-    matchesField
-} from '../../../Common/validations';
+
 import Button from 'material-ui/Button';
 // import { fetchDropdownCascade, clearDropdown } from '../duck';
 import { CircularProgress } from 'material-ui/Progress';
 import { withTheme } from 'material-ui/styles';
 import { routeBack } from '../../../Common/duck';
-
-const validations = {
-    firstName: [
-        required,
-        length(1, 60, 'First name should be between 1 and 60 symbols long'),
-    ],
-    middleName: [
-        required,
-        length(1, 60, 'Middle name should be between 1 and 60 symbols long'),
-    ],
-    lastName: [
-        required,
-        length(1, 60, 'Last name should be between 1 and 60 symbols long'),
-    ],
-    phone: [
-        required,
-        integer,
-        length(1, 20, 'Phone number should be between 1 and 20 numbers long'),
-    ],
-    email: [
-        required,
-        email,
-        length(5, 20, 'Email should be between 5 and 20 symbols long'),
-    ],
-    username: [
-        required,
-        length(1, 60, 'Username name should be between 1 and 60 symbols long'),
-    ],
-    password: [
-        required,
-        length(1, 60, 'Password name should be between 1 and 60 symbols long'),
-    ],
-    repassword: [
-        matchesField('password', 'The password does not match')
-    ],
-};
+import validations from './validations'
 
 class UserForm extends Component {
     componentWillMount() {}
@@ -64,8 +22,7 @@ class UserForm extends Component {
             valid,
             submitting,
             displayName,
-            dropdown,
-            formValues,
+            // dropdown,
             change,
             disabledFields = {},
         } = this.props;

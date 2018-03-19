@@ -7,9 +7,8 @@ import Button from 'material-ui/Button';
 import { CircularProgress } from 'material-ui/Progress';
 
 import { renderTextField } from '../../Common/helpers';
-import { required, matchesField } from '../../Common/validations';
+import { required } from '../../Common/validations';
 
-import { clearChangePassword } from './duck';
 import Paper from 'material-ui/Paper';
 import { Container, Row, Col } from 'react-grid-system';
 import { withTheme } from 'material-ui/styles';

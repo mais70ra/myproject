@@ -11,7 +11,6 @@ import SettingsIcon from 'material-ui-icons/Settings';
 import MenuIcon from 'material-ui-icons/Menu';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import Divider from 'material-ui/Divider';
-import { lightGreen, red } from 'material-ui/colors';
 
 import { ScreenClassRender } from 'react-grid-system';
 import { LinearProgress } from 'material-ui/Progress';

@@ -11,7 +11,11 @@ module.exports = {
     findAll: function(msg) {
         msg.paging.pageSize = msg.paging.pageSize || 5;
         msg.paging.pageNumber = msg.paging.pageNumber || 1;
-        return bus.call('db.send', 'user', 'findAndCountAll', {})
+        return bus.call('db.send', 'user', 'findAndCountAll', {
+            where: {
+                username: msg.username
+            }
+        })
         .then(data => {
             let pages = Math.ceil(data.count / msg.paging.pageSize);
             let offset = msg.paging.pageSize * (msg.paging.pageNumber - 1);

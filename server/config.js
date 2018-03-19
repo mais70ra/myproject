@@ -36,7 +36,6 @@ let mainConfig = {
 			'key': process.env.HTTP_SERVER_KEY || 'test',
 			'proxy': 'true',
 			'timeout': 3600000,
-			'comment': 'memcached -p 8000',
 			'memcachedStore': {
 				'host': process.env.HTTP_SERVER_MEM_HOST || '127.0.0.1',
 				'port': process.env.HTTP_SERVER_MEM_PORT || '8000',
