@@ -5,6 +5,7 @@ import {
   TablePagination,
   TableRow
 } from 'material-ui/Table';
+import { Translate } from '../../Setup/Translate';
 
 const styles = {};
 
@@ -21,11 +22,12 @@ class TableFooterWrapper extends Component {
             rowsPerPage={paging.pageSize}
             page={paging.pageNumber - 1}
             backIconButtonProps={{
-              'aria-label': 'Previous Page'
+              'aria-label': Translate('Previous Page')
             }}
             nextIconButtonProps={{
-              'aria-label': 'Next Page'
+              'aria-label': Translate('Next Page')
             }}
+            labelRowsPerPage={Translate('Rows per page:')}
             onChangePage={(e, pageNumber) => onPageChange(pageNumber + 1)}
             onChangeRowsPerPage={e => onPageSizeChange(e.target.value)}
           />

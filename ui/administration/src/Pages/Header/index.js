@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Translate } from '../../Setup/Translate';
 
 import { withStyles } from 'material-ui/styles';
 import Toolbar from 'material-ui/Toolbar';
@@ -64,7 +65,7 @@ class Header extends Component {
 
                 return (
                   <Button className={classes.contrast} id="user" onClick={this.handleMenu}>
-                    Users
+                    {Translate('Users')}
                   </Button>
                 );
               }}
@@ -77,11 +78,11 @@ class Header extends Component {
               <MenuItem
                 onTouchTap={() => this.changeRoute('/user/create')}
               >
-                Create User
+                {Translate('Create User')}
               </MenuItem>
               <Divider />
               <MenuItem onTouchTap={() => this.changeRoute('/user/list')}>
-                List Users
+                {Translate('List Users')}
               </MenuItem>
             </Menu>
             <div style={{ flex: 1 }} />
@@ -94,10 +95,10 @@ class Header extends Component {
               anchorEl={anchorEl}
             >
               <MenuItem onTouchTap={() => this.changeRoute('/settings')}>
-                Settings
+              {Translate('Settings')}
               </MenuItem>
               <Divider />
-              <MenuItem onTouchTap={this.props.logout}>Logout</MenuItem>
+              <MenuItem onTouchTap={this.props.logout}>{Translate('Logout')}</MenuItem>
             </Menu>
           </Toolbar>
         </AppBar>
