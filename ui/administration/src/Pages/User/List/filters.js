@@ -5,23 +5,23 @@ import Button from 'material-ui/Button';
 import { Field, reduxForm } from 'redux-form';
 import { renderTextField } from '../../../Common/helpers';
 import { integer } from '../../../Common/validations';
-import { Translate } from '../../../Setup/Translate';
+import { translate } from 'react-i18next';
 
 class UsersFilter extends Component {
   render() {
-    const { handleSubmit, submitting, valid, pristine } = this.props;
+    const { handleSubmit, submitting, valid, pristine, t } = this.props;
 
     return (
       <form onSubmit={handleSubmit} autoComplete="off">
         <Row align="start">
           <Col align="start" xs={12} md={4}>
-            <Field name="name" component={renderTextField} label={Translate("Name")} />
+            <Field name="name" component={renderTextField} label={t("Name")} />
           </Col>
           <Col align="start" xs={12} md={4}>
             <Field
               name="phone"
               component={renderTextField}
-              label={Translate("Phone")}
+              label={t("Phone")}
               validate={[integer]}
             />
           </Col>
@@ -30,11 +30,11 @@ class UsersFilter extends Component {
               raised
               type="submit"
               disabled={pristine || submitting || !valid}
-              label={Translate("Search")}
+              label={t("Search")}
               color="primary"
               fullWidth
             >
-              {Translate('Search')}
+              {t('Search')}
             </Button>
           </Col>
         </Row>
@@ -47,4 +47,4 @@ const form = reduxForm({
   form: 'findUser'
 })(UsersFilter);
 
-export default form;
+export default translate()(form);

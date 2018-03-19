@@ -8,7 +8,7 @@ import { CircularProgress } from 'material-ui/Progress';
 
 import { renderTextField } from '../../Common/helpers';
 import { required } from '../../Common/validations';
-import { Translate } from '../../Setup/Translate';
+import { translate } from 'react-i18next';
 
 import Paper from 'material-ui/Paper';
 import { Container, Row, Col } from 'react-grid-system';
@@ -20,7 +20,7 @@ class LoginForm extends Component {
     }
 
     render() {
-        const { handleSubmit, pristine, submitting } = this.props;
+        const { handleSubmit, pristine, submitting, t } = this.props;
         const style = this.props.theme.custom.login;
 
         return (
@@ -30,7 +30,7 @@ class LoginForm extends Component {
                         <Row align='center'>
                             <Col align='center'>
                                 <h2 style={style.title}>
-                                    {Translate('Login')}
+                                    {t('Login')}
                                 </h2>
                             </Col>
                         </Row>
@@ -50,7 +50,7 @@ class LoginForm extends Component {
                                     name='username'
                                     component={renderTextField}
                                     floatingLabel
-                                    label={Translate('Username')}
+                                    label={t('Username')}
                                     validate={[required]}
                                 />
                             </Col>
@@ -60,7 +60,7 @@ class LoginForm extends Component {
                                     type='password'
                                     component={renderTextField}
                                     floatingLabel
-                                    label={Translate('Password')}
+                                    label={t('Password')}
                                     validate={[required]}
                                 />
                             </Col>
@@ -80,7 +80,7 @@ class LoginForm extends Component {
                                     disabled={pristine || submitting}
                                     style={{ marginTop: '1em' }}
                                 >
-                                    {Translate('Submit')}
+                                    {t('Submit')}
                                 </Button>
                             </Col>
                         </Row>
@@ -101,6 +101,7 @@ const form = reduxForm({
     form: 'login',
 })(LoginForm);
 
-export default connect(state => ({
+export default translate()(connect(state => ({
     requests: state.online.requests,
-}))(withTheme()(form));
+}))(withTheme()(form)));
+

@@ -3,7 +3,10 @@ import isNumeric from 'validator/lib/isNumeric';
 import isAlphanumeric from 'validator/lib/isAlphanumeric';
 import isEmpty from 'validator/lib/isEmpty';
 import isInt from 'validator/lib/isInt';
-import { Translate } from '../Setup/Translate';
+// import { I18n } from 'react-i18next';
+let t = v => {
+  return v;
+}
 
 const stringify = value => (value || value === 0 ? String(value) : '');
 
@@ -11,29 +14,29 @@ export const required = value => {
   const stringified = stringify(value);
   return !isEmpty(stringified) && /\S/.test(stringified)
     ? undefined
-    : Translate('Field is required');
+    : t('Field is required');
 };
 
 export const number = value => {
   const stringified = stringify(value);
-  return isNumeric(stringified) ? undefined : Translate('Only numbers allowed');
+  return isNumeric(stringified) ? undefined : t('Only numbers allowed');
 };
 
 export const integer = value => {
   const stringified = stringify(value);
-  return isEmpty(stringified) || isInt(stringified) ? undefined : Translate('Only integers allowed');
+  return isEmpty(stringified) || isInt(stringified) ? undefined : t('Only integers allowed');
 };
 
 export const alphanumeric = value => {
   const stringified = stringify(value);
   return isEmpty(stringified) || isAlphanumeric(stringified)
     ? undefined
-    : Translate('Only alphanumeric characters allowed');
+    : t('Only alphanumeric characters allowed');
 };
 
 export const email = value => {
   const stringified = stringify(value);
-  return isEmpty(stringified) || isEmail(stringified) ? undefined : Translate('Email is invalid');
+  return isEmpty(stringified) || isEmail(stringified) ? undefined : t('Email is invalid');
 };
 
 export const matchesField = (field, message) => (value, fields) =>
@@ -54,5 +57,5 @@ export const length = (minLength, maxLength, errorMessage) => value => {
     return undefined;
   }
 
-  return Translate(errorMessage || 'Length is not valid.');
+  return t(errorMessage || 'Length is not valid.');
 };

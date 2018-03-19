@@ -50,6 +50,12 @@ Httpserver.prototype.init = function(port) {
         res.sendFile(path.join(public + "index.html"));
       });
       app.use(express.static(path.resolve(public)));
+      
+      public = path.join(
+        process.cwd(),
+        "/translations"
+      );
+      app.use(express.static(path.resolve(public)));
     }
     
     app.use(log.logger());

@@ -11,7 +11,7 @@ import Button from 'material-ui/Button';
 import update from 'immutability-helper';
 import get from 'lodash.get';
 import Filters from './filters';
-import Translate from '../../../Setup/Translate';
+import { translate } from 'react-i18next';
 
 class UserList extends Component {
     submit = values => {
@@ -38,8 +38,8 @@ class UserList extends Component {
             changeRoute,
             selectUser,
             selected,
+            t
         } = this.props;
-
         return (
             <div>
                 <Container
@@ -54,7 +54,7 @@ class UserList extends Component {
                             elevation={0}
                         >
                             <Col align="center" xs={12}>
-                                <h2 style={{ color: grey[500] }}>{Translate('User list')}</h2>
+                                <h2 style={{ color: grey[500] }}>{t('List Users')}</h2>
                             </Col>
                             <Filters onSubmit={this.submit} />
                         </Paper>
@@ -64,15 +64,15 @@ class UserList extends Component {
                     render={screenClass => {
                         const columns = [
                             {
-                                header: Translate('First Name'),
+                                header: t('First Name'),
                                 key: 'firstName',
                             },
                             {
-                                header: Translate('Last Name'),
+                                header: t('Last Name'),
                                 key: 'lastName',
                             },
                             {
-                                header: Translate('Phone'),
+                                header: t('Phone'),
                                 key: 'phone',
                             },
                         ];
@@ -92,7 +92,7 @@ class UserList extends Component {
                                             )
                                         }
                                     >
-                                        {Translate('Edit')}
+                                        {t('Edit')}
                                     </Button>
                                 ),
                             });
@@ -102,7 +102,7 @@ class UserList extends Component {
                             <DataTable
                                 idProp="id"
                                 data={this.props.data}
-                                emptyMessage={Translate("No data to display")}
+                                emptyMessage={t("No data to display")}
                                 columns={columns}
                                 onRowClick={
                                     isSmallScreen &&
@@ -136,11 +136,11 @@ class UserList extends Component {
     }
 }
 
-export default connect(
+export default translate()(connect(
     state => ({
         data: state.user.userList.data,
         selected: state.user.userList.selected,
         filters: state.user.userList.filters,
     }),
     { fetchUsers, selectUser, changeRoute, changeFilters }
-)(UserList);
+)(UserList));

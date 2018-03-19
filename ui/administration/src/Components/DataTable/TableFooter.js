@@ -5,13 +5,13 @@ import {
   TablePagination,
   TableRow
 } from 'material-ui/Table';
-import { Translate } from '../../Setup/Translate';
+import { translate } from 'react-i18next';
 
 const styles = {};
 
 class TableFooterWrapper extends Component {
   render() {
-    const { columns, paging, onPageChange, onPageSizeChange } = this.props;
+    const { columns, paging, onPageChange, onPageSizeChange, t } = this.props;
 
     return (
       <TableFooter>
@@ -22,12 +22,12 @@ class TableFooterWrapper extends Component {
             rowsPerPage={paging.pageSize}
             page={paging.pageNumber - 1}
             backIconButtonProps={{
-              'aria-label': Translate('Previous Page')
+              'aria-label': t('Previous Page')
             }}
             nextIconButtonProps={{
-              'aria-label': Translate('Next Page')
+              'aria-label': t('Next Page')
             }}
-            labelRowsPerPage={Translate('Rows per page:')}
+            labelRowsPerPage={t('Rows per page:')}
             onChangePage={(e, pageNumber) => onPageChange(pageNumber + 1)}
             onChangeRowsPerPage={e => onPageSizeChange(e.target.value)}
           />
@@ -37,4 +37,4 @@ class TableFooterWrapper extends Component {
   }
 }
 
-export default withStyles(styles)(TableFooterWrapper);
+export default translate()(withStyles(styles)(TableFooterWrapper));

@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { userCreate } from './duck';
 import UserForm from '../Form';
-import { Translate } from '../../../Setup/Translate';
+import { translate } from 'react-i18next';
 
 class UserCreate extends Component {
     render() {
+        const Translate = this.props.t;
         return (
             <UserForm
                 formName="userCreate"
@@ -17,4 +18,4 @@ class UserCreate extends Component {
     }
 }
 
-export default connect(state => ({}), { userCreate })(UserCreate);
+export default translate()(connect(state => ({}), { userCreate })(UserCreate));

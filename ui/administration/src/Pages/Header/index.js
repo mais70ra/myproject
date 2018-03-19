@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Translate } from '../../Setup/Translate';
+import { translate } from 'react-i18next';
 
 import { withStyles } from 'material-ui/styles';
 import Toolbar from 'material-ui/Toolbar';
@@ -47,7 +47,7 @@ class Header extends Component {
 
   render() {
     const { anchorEl, open } = this.state;
-    const { classes } = this.props;
+    const { classes, t } = this.props;
 
     return (
       <div>
@@ -65,7 +65,7 @@ class Header extends Component {
 
                 return (
                   <Button className={classes.contrast} id="user" onClick={this.handleMenu}>
-                    {Translate('Users')}
+                    {t('Users')}
                   </Button>
                 );
               }}
@@ -78,11 +78,11 @@ class Header extends Component {
               <MenuItem
                 onTouchTap={() => this.changeRoute('/user/create')}
               >
-                {Translate('Create User')}
+                {t('Create User')}
               </MenuItem>
               <Divider />
               <MenuItem onTouchTap={() => this.changeRoute('/user/list')}>
-                {Translate('List Users')}
+                {t('List Users')}
               </MenuItem>
             </Menu>
             <div style={{ flex: 1 }} />
@@ -95,10 +95,10 @@ class Header extends Component {
               anchorEl={anchorEl}
             >
               <MenuItem onTouchTap={() => this.changeRoute('/settings')}>
-              {Translate('Settings')}
+              {t('Settings')}
               </MenuItem>
               <Divider />
-              <MenuItem onTouchTap={this.props.logout}>{Translate('Logout')}</MenuItem>
+              <MenuItem onTouchTap={this.props.logout}>{t('Logout')}</MenuItem>
             </Menu>
           </Toolbar>
         </AppBar>
@@ -120,9 +120,9 @@ Header.propTypes = {
   logout: PropTypes.func
 };
 
-export default connect(
+export default translate()(connect(
   state => ({
     requests: state.online.requests
   }),
   { changeRoute, logout }
-)(withStyles(styles)(Header));
+)(withStyles(styles)(Header)));

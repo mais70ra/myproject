@@ -5,7 +5,7 @@ import { reduxForm, getFormValues } from 'redux-form';
 import { grey500, white } from 'material-ui/colors';
 import { Container, Row, Col, ScreenClassRender } from 'react-grid-system';
 import { contentBoxMapper } from '../../../Common/helpers';
-import { Translate } from '../../../Setup/Translate';
+import { translate } from 'react-i18next';
 
 import Button from 'material-ui/Button';
 // import { fetchDropdownCascade, clearDropdown } from '../duck';
@@ -26,8 +26,9 @@ class UserForm extends Component {
             // dropdown,
             change,
             disabledFields = {},
+            t
         } = this.props;
-
+       // validations({t});
         return (
             <form onSubmit={handleSubmit} autoComplete="off">
                 <Container
@@ -52,7 +53,7 @@ class UserForm extends Component {
                                     xs: 12,
                                 },
                                 boxProps: {
-                                    title: Translate('General info'),
+                                    title: t('General info'),
                                     style: {
                                         marginBottom: 10,
                                     },
@@ -60,7 +61,7 @@ class UserForm extends Component {
                                 inputs: [
                                     {
                                         inputType: 'text',
-                                        label: Translate('First name'),
+                                        label: t('First name'),
                                         name: 'firstName',
                                         show: true,
                                         disabled: disabledFields.firstName,
@@ -68,7 +69,7 @@ class UserForm extends Component {
                                     },
                                     {
                                         inputType: 'text',
-                                        label: Translate('Middle Name'),
+                                        label: t('Middle Name'),
                                         name: 'middleName',
                                         show: true,
                                         disabled: disabledFields.middleName,
@@ -76,7 +77,7 @@ class UserForm extends Component {
                                     },
                                     {
                                         inputType: 'text',
-                                        label: Translate('Last Name'),
+                                        label: t('Last Name'),
                                         name: 'lastName',
                                         show: true,
                                         disabled: disabledFields.lastName,
@@ -90,12 +91,12 @@ class UserForm extends Component {
                                     md: 6,
                                 },
                                 boxProps: {
-                                    title: Translate('Phone and Email'),
+                                    title: t('Phone and Email'),
                                 },
                                 inputs: [
                                     {
                                         inputType: 'text',
-                                        label: Translate('Phone'),
+                                        label: t('Phone'),
                                         name: 'phone',
                                         show: true,
                                         disabled: disabledFields.phone,
@@ -103,7 +104,7 @@ class UserForm extends Component {
                                     },
                                     {
                                         inputType: 'text',
-                                        label: Translate('Email'),
+                                        label: t('Email'),
                                         name: 'email',
                                         show: true,
                                         disabled: disabledFields.email,
@@ -117,12 +118,12 @@ class UserForm extends Component {
                                     md: 6,
                                 },
                                 boxProps: {
-                                    title: Translate('Credentials'),
+                                    title: t('Credentials'),
                                 },
                                 inputs: [
                                     {
                                         inputType: 'text',
-                                        label: Translate('Username'),
+                                        label: t('Username'),
                                         name: 'username',
                                         show: true,
                                         disabled: disabledFields.username,
@@ -130,7 +131,7 @@ class UserForm extends Component {
                                     },
                                     {
                                         inputType: 'text',
-                                        label: Translate('Password'),
+                                        label: t('Password'),
                                         name: 'password',
                                         type: 'password',
                                         show: true,
@@ -139,7 +140,7 @@ class UserForm extends Component {
                                     },
                                     {
                                         inputType: 'text',
-                                        label: Translate('Confirm Password'),
+                                        label: t('Confirm Password'),
                                         name: 'repassword',
                                         type: 'password',
                                         show: true,
@@ -171,7 +172,7 @@ class UserForm extends Component {
                                 <Button
                                     fullWidth
                                     raised
-                                    label={Translate("Cancel")}
+                                    label={t("Cancel")}
                                     color="secondary"
                                     onTouchTap={this.props.routeBack}
                                 >
@@ -190,7 +191,7 @@ class UserForm extends Component {
                                                 fontWeight: 'bold',
                                             }}
                                         >
-                                            {Translate('Cancel')}
+                                            {t('Cancel')}
                                         </span>
                                     </div>
                                 </Button>
@@ -225,7 +226,7 @@ class UserForm extends Component {
                                                 fontWeight: 'bold',
                                             }}
                                         >
-                                            {Translate('Save')}
+                                            {t('Save')}
                                         </span>
                                     )}
                                 </div>
@@ -238,7 +239,7 @@ class UserForm extends Component {
     }
 }
 
-export default compose(
+export default translate()(compose(
     connect((state, props) => ({
         form: props.formName,
     })),
@@ -251,4 +252,4 @@ export default compose(
         }),
         { routeBack } // fetchDropdownCascade, clearDropdown,
     )(withTheme()(UserForm))
-);
+));

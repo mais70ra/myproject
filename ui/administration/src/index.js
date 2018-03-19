@@ -19,6 +19,7 @@ import './Setup/tapEventPlugin';
 import { resetRequestsCount, resetDialog } from './Common/duck';
 
 import SessionGateway from './Pages/Login/SessionGateway';
+import './i18n';
 
 store.dispatch(resetRequestsCount());
 store.dispatch(resetDialog());
