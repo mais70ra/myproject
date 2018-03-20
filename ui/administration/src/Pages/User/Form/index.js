@@ -23,7 +23,7 @@ class UserForm extends Component {
             valid,
             submitting,
             displayName,
-            // dropdown,
+            dropdowns,
             change,
             disabledFields = {},
             t
@@ -83,7 +83,23 @@ class UserForm extends Component {
                                         disabled: disabledFields.lastName,
                                         validate: validations.lastName,
                                     },
-                                ],
+                                    {
+                                        inputType: 'select',
+                                        label: t('Gender'),
+                                        name: 'gender',
+                                        show: true,
+                                        options: dropdowns.gender,
+                                        validate: validations.gender
+                                    },
+                                    {
+                                        inputType: 'select',
+                                        label: t('Language'),
+                                        name: 'lang',
+                                        show: true,
+                                        options: dropdowns.languages,
+                                        validate: validations.lang
+                                    }
+                                ]
                             },
                             {
                                 colProps: {
@@ -248,7 +264,7 @@ export default translate()(compose(
     connect(
         (state, { formName }) => ({
             formValues: getFormValues(formName)(state) || {},
-            // ,dropdown: state.users.dropdown.local
+            dropdowns: state.user.dropdowns            
         }),
         { routeBack } // fetchDropdownCascade, clearDropdown,
     )(withTheme()(UserForm))

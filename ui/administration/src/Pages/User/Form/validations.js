@@ -41,6 +41,12 @@ const validations = {
     ],
     repassword: [
         matchesField('password', t('The password does not match'))
+    ],
+    lang: [
+        required
+    ],
+    gender: [
+        required
     ]
 }
 

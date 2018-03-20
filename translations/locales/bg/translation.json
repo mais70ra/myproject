@@ -4,6 +4,7 @@
     "Password": "Парола",
     "Submit": "Изпращане",
     "Create User": "Създай потребител",
+    "User Details": "Потребителски детайли",
     "List Users": "Списък с потребители",
     "Settings": "Настройки",
     "Logout": "Излез",
@@ -13,9 +14,12 @@
     "Search": "Търси",
     "First Name": "Първо име",
     "Last Name": "Последно име",
+    "Gender": "Пол",
+    "Language": "Изик",
     "No data to display": "Няма намерени данни",
     "Edit": "Редакция",
     "Previous Page": "Предна страница",
     "Next Page": "Следваща страница",
-    "Rows per page": "Редове на страница"
+    "Rows per page": "Редове на страница",
+    "Download dropdowns": "Свали падащи менюта"
 }

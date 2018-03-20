@@ -6,11 +6,11 @@ import { translate } from 'react-i18next';
 
 class UserCreate extends Component {
     render() {
-        const Translate = this.props.t;
+        const t = this.props.t;
         return (
             <UserForm
                 formName="userCreate"
-                displayName={Translate("User Details")}
+                displayName={t("User Details")}
                 initialValues={{}}
                 onSubmit={this.props.userCreate}
             />

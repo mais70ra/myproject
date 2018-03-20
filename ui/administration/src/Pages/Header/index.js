@@ -18,6 +18,7 @@ import { LinearProgress } from 'material-ui/Progress';
 
 import { changeRoute } from '../../Common/duck';
 import { logout } from '../Login/duck';
+import { fetchUserDropdowns } from '../User/duck';
 
 const styles = ({ palette }) => ({
   contrast: {
@@ -32,7 +33,7 @@ class Header extends Component {
   };
 
   componentWillMount = () => {
-    // this.props.fetchDropdowns();
+    this.props.fetchUserDropdowns();
   };
 
   handleMenu = e =>
@@ -124,5 +125,5 @@ export default translate()(connect(
   state => ({
     requests: state.online.requests
   }),
-  { changeRoute, logout }
+  { changeRoute, logout, fetchUserDropdowns }
 )(withStyles(styles)(Header)));
