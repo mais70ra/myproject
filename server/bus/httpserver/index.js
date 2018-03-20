@@ -122,12 +122,14 @@ Httpserver.prototype.init = function(port) {
               bus.config[bus.id].permission.loginMethod
             ) {
               if (body.method === bus.config[bus.id].permission.loginMethod) {
-                return bus.call(body.method, params).then(session => {
-                  return sessionHandler
-                    .createSession(req.session, session.data)
-                    .then(() => {
-                      return Promise.resolve(session.response);
-                    });
+                return bus.call(body.method, params, {
+                    headers: req.headers
+                  }).then(session => {
+                    return sessionHandler
+                      .createSession(req.session, session.data)
+                      .then(() => {
+                        return Promise.resolve(session.response);
+                      });
                 });
               } else if (body.method === bus.config[bus.id].permission.logoutMethod) {
                 return sessionHandler
@@ -140,16 +142,23 @@ Httpserver.prototype.init = function(port) {
               } else if (bus.config[bus.id].publicMethods &&
                 bus.config[bus.id].publicMethods.indexOf(body.method) > -1
               ) {
-                return bus.call(body.method, params);
+                return bus.call(body.method, params, {
+                  headers: req.headers
+                });
               } else {
                 return sessionHandler
                   .verifySession(req.session)
                   .then(() => {
-                    return bus.call(body.method, params);
+                    return bus.call(body.method, params, {
+                      session: req.session,
+                      headers: req.headers
+                    });
                   });
               }
             } else {
-              return bus.call(body.method, params);
+              return bus.call(body.method, params, {
+                headers: req.headers
+              });
             }
           };
           return incoming()

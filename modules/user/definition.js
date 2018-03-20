@@ -90,6 +90,28 @@ module.exports = {
                 len: [2, 10]
             }
         }
+    }, {
+        name: 'lang',
+        define: {
+            type: 'STRING',
+            typeParams: [2],
+            allowNull: false,
+            dict: 'languages',
+            validate: {
+                len: [2, 2]
+            }
+        }
+    }, {
+        name: 'gender',
+        define: {
+            type: 'STRING',
+            typeParams: [1],
+            allowNull: true,
+            dict: 'gender',
+            validate: {
+                len: [1, 1]
+            }
+        }
     }],
     extend: {
         defaultScope: {

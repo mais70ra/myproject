@@ -7,6 +7,7 @@ module.exports = {
     modules: {
         user: require('../modules/user'),
         product: require('../modules/product'),
-        role: require('../modules/role')
+        role: require('../modules/role'),
+        dictionaries: require('../modules/dictionaries')
     }
 };

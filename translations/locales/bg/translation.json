@@ -1,0 +1,21 @@
+{
+    "Login": "Login",
+    "Username": "Username",
+    "Password": "Password",
+    "Submit": "Submit",
+    "Create User": "Create User",
+    "List Users": "List Users",
+    "Settings": "Settings",
+    "Logout": "Logout",
+    "Users": "Users",
+    "Name": "Name",
+    "Phone": "Phone",
+    "Search": "Search",
+    "First Name": "First Name",
+    "Last Name": "Last Name",
+    "No data to display": "No data to display",
+    "Edit": "Edit",
+    "Previous Page": "Previous Page",
+    "Next Page": "Next Page",
+    "Rows per page": "Rows per page"
+}

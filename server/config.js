@@ -9,6 +9,10 @@ let mainConfig = {
 	'identity': {
 		'log': 'trace'
 	},
+	'languages': {
+		'defaultLang': 'en',
+		'languages': ['en', 'bg']
+	},
 	'db': {
 		'credentinals': {
 			'database': process.env.DB_NAME || 'database',
@@ -29,7 +33,7 @@ let mainConfig = {
 		'port': parseInt(process.env.HTTP_SERVER_PORT) || 3000,
 		'publicPath': '/ui/administration/build/',
 		'errorLog': 'trace',
-		'permission': {
+		'_permission': {
 			'loginMethod': 'user.login',
 			'logoutMethod': 'user.logout',
 			'secret': process.env.HTTP_SERVER_SECRET || '152soos012o',

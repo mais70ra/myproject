@@ -9,7 +9,9 @@ let seeds = [
             phone: '088888888',
             firstName: 'Admin',
             lastName: 'Admin',
-            middleName: 'Admin'
+            middleName: 'Admin',
+            gender: 'm',
+            lang: 'en'
         }
     }
 ];
@@ -23,7 +25,9 @@ for (var i = 0; i < 100; i++) {
             phone: '0888888' + i,
             firstName: 'Admin' + i,
             lastName: 'Admin' + i,
-            middleName: 'Admin' + i
+            middleName: 'Admin' + i,
+            gender: 'm',
+            lang: 'en'
         }
     });
 }

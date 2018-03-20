@@ -1,0 +1,19 @@
+{
+    "languages": [{
+        "key": "en",
+        "value": "English"
+    }, {
+        "key": "bg",
+        "value": "Bulgarian"
+    }],
+    "gender": [{
+        "key": "m",
+        "value": "Male"
+    }, {
+        "key": "f",
+        "value": "Female"
+    }, {
+        "key": "o",
+        "value": "Other"
+    }]
+}

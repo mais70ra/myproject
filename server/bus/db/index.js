@@ -5,12 +5,14 @@ Sequelize.Validator.notNull = function (item) {
 };
 const Op = Sequelize.Op;
 var CryptoJS = require("crypto-js");
+var dictionaries;
 
 function Db (bus) {
     this.bus = bus;
     this.sequelize = undefined;
     this.db = {};
     this.objects = {};
+    dictionaries = require('../../../translations/locales/' + bus.config.languages.defaultLang + '/dictionaries');
 }
 
 Db.prototype.init = function(m) {
@@ -34,6 +36,10 @@ Db.prototype.init = function(m) {
                 this.objects[map.name].gdpr = this.objects[map.name].gdpr || [];
                 this.objects[map.name].gdpr.push(field.name);
             }
+            if (field.define.dict) {
+                field.define.validate = field.define.validate || {};
+                field.define.validate.is = allowOnlyDictValues(field.define.dict);
+            }
             define[field.name] = field.define;
         }.bind(this));
         this.db[map.name] = this.sequelize.define(map.name, define, map.extend);
@@ -43,6 +49,15 @@ Db.prototype.init = function(m) {
     .then(function() {
         return Promise.resolve(true);
     });
+}
+
+function allowOnlyDictValues(d) {
+    let dict = dictionaries[d];
+    let keys = [];
+    dict.forEach((option) => {
+        keys.push(option.key);
+    });
+    return ['^' + keys.join('|') + '','i'];
 }
 
 Db.prototype.send = (...obj) => {
