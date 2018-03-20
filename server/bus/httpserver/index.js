@@ -126,7 +126,10 @@ Httpserver.prototype.init = function(port) {
                     headers: req.headers
                   }).then(session => {
                     return sessionHandler
-                      .createSession(req.session, session.data)
+                      .createSession(req.session, {
+                        data: session.data,
+                        response: session.response
+                      })
                       .then(() => {
                         return Promise.resolve(session.response);
                       });
@@ -149,16 +152,14 @@ Httpserver.prototype.init = function(port) {
                 return sessionHandler
                 .verifySession(req.session)
                 .then((s) => {
-                  return {
-                    resultCode: 0
-                  };
+                  return s.response;
                 });
               } else {
                 return sessionHandler
                   .verifySession(req.session)
-                  .then(() => {
+                  .then((s) => {
                     return bus.call(body.method, params, {
-                      session: req.session,
+                      session: s,
                       headers: req.headers
                     });
                   });

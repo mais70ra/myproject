@@ -67,7 +67,9 @@ module.exports = {
                                     user: user[0]
                                 },
                                 response: {
-                                    resultCode: 0
+                                    firstName: user[0].firstName,
+                                    lastName: user[0].lastName,
+                                    lang: user[0].lang
                                 }
                             };
                         } else {

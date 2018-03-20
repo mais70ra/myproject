@@ -30,7 +30,11 @@ export default (state = defaultState, action) => {
         sessionChecked: true
       };
     case LOGIN_COMMIT:
-      return { ...state, currentUser: parseLogin(action) };
+      return {
+        ...state,
+        currentUser: parseLogin(action),
+        sessionChecked: true
+      };
     case CHECK_SESSION_COMMIT:
       return {
         ...state,
