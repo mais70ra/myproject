@@ -1,16 +1,16 @@
 {
     "languages": [{
         "key": "en",
-        "value": "English"
+        "value": "Английски"
     }, {
         "key": "bg",
-        "value": "Bulgarian"
+        "value": "Български"
     }],
     "gender": [{
         "key": "m",
-        "value": "Male"
+        "value": "Мъж"
     }, {
         "key": "f",
-        "value": "Female"
+        "value": "Жена"
     }]
 }
