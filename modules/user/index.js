@@ -5,7 +5,7 @@ module.exports = {
     init: function(b) {
         bus = b;
     },
-    checks: function(msg) {
+    checkSession: function(msg) {
         return Promise.resolve(msg);
     },
     findAll: function(msg) {

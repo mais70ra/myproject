@@ -33,9 +33,10 @@ let mainConfig = {
 		'port': parseInt(process.env.HTTP_SERVER_PORT) || 3000,
 		'publicPath': '/ui/administration/build/',
 		'errorLog': 'trace',
-		'_permission': {
+		'permission': {
 			'loginMethod': 'user.login',
 			'logoutMethod': 'user.logout',
+			'checkSession': 'user.checkSession',
 			'secret': process.env.HTTP_SERVER_SECRET || '152soos012o',
 			'key': process.env.HTTP_SERVER_KEY || 'test',
 			'proxy': 'true',

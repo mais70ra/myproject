@@ -145,6 +145,14 @@ Httpserver.prototype.init = function(port) {
                 return bus.call(body.method, params, {
                   headers: req.headers
                 });
+              } else if (body.method === bus.config[bus.id].permission.checkSession) {
+                return sessionHandler
+                .verifySession(req.session)
+                .then((s) => {
+                  return {
+                    resultCode: 0
+                  };
+                });
               } else {
                 return sessionHandler
                   .verifySession(req.session)

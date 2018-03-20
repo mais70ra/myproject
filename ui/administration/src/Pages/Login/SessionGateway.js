@@ -1,14 +1,19 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { checkSessionNoCookie } from './duck';
 import { CircularProgress } from 'material-ui/Progress';
 import { Container, Row, Col } from 'react-grid-system';
+import { checkSession, checkSessionNoCookie } from './duck';
+import cookies from 'js-cookie';
 
 class SessionGateway extends Component {
   componentWillMount() {
-    // not checking ut5-cookie because its HttpOnly
     // meaning it can't be accessed
-    this.props.checkSessionNoCookie();
+    this.props.checkSession();
+    // if (cookies.get('Cookie')) {
+    //   this.props.checkSession();
+    // } else {
+    //   this.props.checkSessionNoCookie();
+    // }
   }
 
   render() {
@@ -30,5 +35,6 @@ class SessionGateway extends Component {
 }
 
 export default connect(({ auth }) => ({ checked: auth.sessionChecked }), {
+  checkSession,
   checkSessionNoCookie
 })(SessionGateway);
