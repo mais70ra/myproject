@@ -4,29 +4,38 @@ import { compose } from 'redux';
 import { reduxForm, getFormValues } from 'redux-form';
 import { grey500, white } from 'material-ui/colors';
 import { Container, Row, Col, ScreenClassRender } from 'react-grid-system';
-import { contentBoxMapper } from '../../../Common/helpers';
+import { contentBoxMapper } from '../../Common/helpers';
 import { translate } from 'react-i18next';
 
 import Button from 'material-ui/Button';
 // import { fetchDropdownCascade, clearDropdown } from '../duck';
 import { CircularProgress } from 'material-ui/Progress';
 import { withTheme } from 'material-ui/styles';
-import { routeBack } from '../../../Common/duck';
+import { routeBack } from '../../Common/duck';
 import validations from './validations'
+import { changeLanguage } from './duck';
 
-class UserForm extends Component {
+class ChangeLangForm extends Component {
     componentWillMount() {}
     render() {
         const {
-            handleSubmit,
             pristine,
             valid,
             submitting,
             displayName,
             dropdowns,
-            disabledFields = {},
+            i18n,
             t
         } = this.props;
+        let handleSubmit = () => {
+            this.props.changeLanguage({
+                lang: this.props.formValues.lang
+            })
+            .then((r) => {
+                i18n.changeLanguage(this.props.formValues.lang);
+                return r;
+            });
+        }
        // validations({t});
         return (
             <form onSubmit={handleSubmit} autoComplete="off">
@@ -52,44 +61,12 @@ class UserForm extends Component {
                                     xs: 12,
                                 },
                                 boxProps: {
-                                    title: t('General info'),
+                                    title: t('Change language'),
                                     style: {
                                         marginBottom: 10,
                                     },
                                 },
                                 inputs: [
-                                    {
-                                        inputType: 'text',
-                                        label: t('First name'),
-                                        name: 'firstName',
-                                        show: true,
-                                        disabled: disabledFields.firstName,
-                                        validate: validations.firstName,
-                                    },
-                                    {
-                                        inputType: 'text',
-                                        label: t('Middle Name'),
-                                        name: 'middleName',
-                                        show: true,
-                                        disabled: disabledFields.middleName,
-                                        validate: validations.middleName,
-                                    },
-                                    {
-                                        inputType: 'text',
-                                        label: t('Last Name'),
-                                        name: 'lastName',
-                                        show: true,
-                                        disabled: disabledFields.lastName,
-                                        validate: validations.lastName,
-                                    },
-                                    {
-                                        inputType: 'select',
-                                        label: t('Gender'),
-                                        name: 'gender',
-                                        show: true,
-                                        options: dropdowns.gender,
-                                        validate: validations.gender
-                                    },
                                     {
                                         inputType: 'select',
                                         label: t('Language'),
@@ -99,71 +76,7 @@ class UserForm extends Component {
                                         validate: validations.lang
                                     }
                                 ]
-                            },
-                            {
-                                colProps: {
-                                    xs: 12,
-                                    md: 6,
-                                },
-                                boxProps: {
-                                    title: t('Phone and Email'),
-                                },
-                                inputs: [
-                                    {
-                                        inputType: 'text',
-                                        label: t('Phone'),
-                                        name: 'phone',
-                                        show: true,
-                                        disabled: disabledFields.phone,
-                                        validate: validations.phone,
-                                    },
-                                    {
-                                        inputType: 'text',
-                                        label: t('Email'),
-                                        name: 'email',
-                                        show: true,
-                                        disabled: disabledFields.email,
-                                        validate: validations.email,
-                                    },
-                                ],
-                            },
-                            {
-                                colProps: {
-                                    xs: 12,
-                                    md: 6,
-                                },
-                                boxProps: {
-                                    title: t('Credentials'),
-                                },
-                                inputs: [
-                                    {
-                                        inputType: 'text',
-                                        label: t('Username'),
-                                        name: 'username',
-                                        show: true,
-                                        disabled: disabledFields.username,
-                                        validate: validations.username,
-                                    },
-                                    {
-                                        inputType: 'text',
-                                        label: t('Password'),
-                                        name: 'password',
-                                        type: 'password',
-                                        show: true,
-                                        disabled: disabledFields.password,
-                                        validate: validations.password,
-                                    },
-                                    {
-                                        inputType: 'text',
-                                        label: t('Confirm Password'),
-                                        name: 'repassword',
-                                        type: 'password',
-                                        show: true,
-                                        disabled: disabledFields.repassword,
-                                        validate: validations.repassword
-                                    },
-                                ],
-                            },
+                            }
                         ])}
                     </Row>
                     <Row>
@@ -260,6 +173,6 @@ export default translate()(compose(
             formValues: getFormValues(formName)(state) || {},
             dropdowns: state.user.dropdowns            
         }),
-        { routeBack } // fetchDropdownCascade, clearDropdown,
-    )(withTheme()(UserForm))
+        { routeBack, changeLanguage } // fetchDropdownCascade, clearDropdown,
+    )(withTheme()(ChangeLangForm))
 ));

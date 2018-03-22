@@ -6,7 +6,7 @@ module.exports = {
         bus = b;
     },
     get: (msg, context) => {
-        let lang = (context.session && context.session.lang || bus.config.languages.defaultLang);
+        let lang = (context.session && context.session.data && context.session.data.lang || bus.config.languages.defaultLang);
         let inMemoryDictionaries = require('../../translations/locales/' + lang + '/dictionaries');;
         if (!msg.dictionaries) {
             msg.dictionaries = Object.keys(inMemoryDictionaries); // Add the dictionaries from DB

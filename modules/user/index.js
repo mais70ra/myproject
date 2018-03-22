@@ -13,6 +13,7 @@ module.exports = {
         msg.paging.pageNumber = msg.paging.pageNumber || 1;
         return bus.call('db.send', 'user', 'findAndCountAll', {
             where: {
+                id: msg.id,
                 username: msg.username
             }
         })
@@ -44,6 +45,50 @@ module.exports = {
             return user;
         });
     },
+    updateCurrent: function(msg, context) {
+        return {};
+    },
+    getCurrentUser: function(msg, context) {
+        return bus.call('db.send', 'user', 'findAndCountAll', {
+            where: {
+                id: msg.id
+            }
+        })
+        .then(result => {
+            return result;
+        });
+    },
+    changePassword: function(msg, context) {
+        if (!msg.password) {
+            throw new Error('no_password_provided');
+        }
+        return bus.call('db.send', 'user', 'update', {
+            password: CryptoJS.MD5(msg.password).toString()
+        }, {
+            where: {
+                id: context.session.id
+            }
+        })
+        .then(r => {
+            return {
+                resultCode: 0
+            };
+        });
+    },
+    changeLanguage: function(msg, context) {
+        return bus.call('db.send', 'user', 'update', {
+            lang: msg.lang
+        }, {
+            where: {
+                id: context.session.data.id
+            }
+        })
+        .then(r => {
+            return {
+                resultCode: 0
+            };
+        });
+    },
     login: function(msg) {
         return bus.call('db.send', 'user', 'findAll', {
             where: {
@@ -63,9 +108,7 @@ module.exports = {
                     .then(user => {
                         if (user[0]) {
                             return {
-                                data: {
-                                    user: user[0]
-                                },
+                                data: user[0],
                                 response: {
                                     firstName: user[0].firstName,
                                     lastName: user[0].lastName,

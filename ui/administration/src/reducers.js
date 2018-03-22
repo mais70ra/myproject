@@ -16,5 +16,6 @@ export default combineReducers({
   auth,
   user: combineReducers({ dropdowns: userDropdowns, userList, userCreate }), // , userCreate, userEdit
   dialog,
-  form: formReducer
+  form: formReducer,
+  settings: combineReducers({ dropdowns: userDropdowns })
 });

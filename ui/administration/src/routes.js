@@ -47,11 +47,6 @@ class Routes extends Component {
 
 export default withRouter(
     connect(state => ({ 
-      currentUser: state.auth.currentUser,
-      translations: {
-        EN: {
-          
-        }
-      }
+      currentUser: state.auth.currentUser
     }))(Routes)
 );

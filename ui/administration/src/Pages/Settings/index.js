@@ -1,35 +1,36 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
-import { Container, Row, Col } from 'react-grid-system';
+import { reduxForm, getFormValues } from 'redux-form';
+import { grey500, white } from 'material-ui/colors';
+import { Container, Row, Col, ScreenClassRender } from 'react-grid-system';
+import { contentBoxMapper } from '../../Common/helpers';
+import ChangeLangForm from './ChangeLangForm';
+import { CircularProgress } from 'material-ui/Progress';
 import Button from 'material-ui/Button';
 import { translate } from 'react-i18next';
-import { fetchUserDropdowns } from '../User/duck';
+import validations from './validations'
 
 class Settings extends Component {
-  componentWillMount() {}
-  render() {
-    const { t } = this.props;
-    const fetchDropdowns = () => {
-      this.props.fetchUserDropdowns();
+    componentWillMount() {
+      
     }
-    return (
-      <Container style={{ marginTop: 15 }}>
-        <Row>
-          <Col xs={12} md={6}>
-            <Button
-              fullWidth
-              color="primary"
-              raised
-              onTouchTap={() => fetchDropdowns()}
-            >{t('Download dropdowns')}</Button>
-          </Col>
-        </Row>
-      </Container>
-    );
-  }
+    render() {
+        const t = this.props.t;
+        return (
+            <ChangeLangForm
+                formName="ChangeLangForm"
+                displayName={t("Settings")}
+                initialValues={this.props.currentUser}
+            />
+        );
+    }
 }
 
-export default translate()(connect(state => ({}), {
-  fetchUserDropdowns
-})(Settings));
+export default translate()(
+    connect(state => ({
+        dropdowns: state.user.dropdowns,
+        currentUser: state.auth.currentUser
+    }), {
+        // changeLanguage
+    })(Settings)
+);
