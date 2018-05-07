@@ -14,6 +14,7 @@ import { withTheme } from 'material-ui/styles';
 import { routeBack } from '../../Common/duck';
 import validations from './validations'
 import { changeLanguage } from './duck';
+import { fetchUserDropdowns } from '../User/duck';
 
 class ChangeLangForm extends Component {
     componentWillMount() {}
@@ -25,19 +26,22 @@ class ChangeLangForm extends Component {
             displayName,
             dropdowns,
             i18n,
-            t
+            t,
+            currentUser
         } = this.props;
         let handleSubmit = () => {
             this.props.changeLanguage({
                 lang: this.props.formValues.lang
             })
             .then((r) => {
+                currentUser.lang = this.props.formValues.lang;
+                this.props.fetchUserDropdowns();
                 i18n.changeLanguage(this.props.formValues.lang);
                 return r;
             });
         }
        // validations({t});
-        return (
+         return (
             <form onSubmit={handleSubmit} autoComplete="off">
                 <Container
                     fluid
@@ -73,7 +77,8 @@ class ChangeLangForm extends Component {
                                         name: 'lang',
                                         show: true,
                                         options: dropdowns.languages,
-                                        validate: validations.lang
+                                        validate: validations.lang,
+                                        defaultValue: currentUser.lang
                                     }
                                 ]
                             }
@@ -173,6 +178,6 @@ export default translate()(compose(
             formValues: getFormValues(formName)(state) || {},
             dropdowns: state.user.dropdowns            
         }),
-        { routeBack, changeLanguage } // fetchDropdownCascade, clearDropdown,
+        { routeBack, changeLanguage, fetchUserDropdowns } // fetchDropdownCascade, clearDropdown,
     )(withTheme()(ChangeLangForm))
 ));

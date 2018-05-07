@@ -161,6 +161,19 @@ Httpserver.prototype.init = function(port) {
                     return bus.call(body.method, params, {
                       session: s,
                       headers: req.headers
+                    })
+                    .then(r => {
+                      if (r && r.updateSession) {
+                        // req.session.save(Object.assign({}, r.updateSession, req.session.auth));
+                        if (r.updateSession.response) {
+                          Object.assign(req.session.auth.response, r.updateSession.response);
+                        }
+                        if (r.updateSession.data) {
+                          Object.assign(req.session.auth.data, r.updateSession.data);
+                        }
+                        delete r.updateSession;
+                      }
+                      return r;
                     });
                   });
               }

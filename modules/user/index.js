@@ -85,7 +85,15 @@ module.exports = {
         })
         .then(r => {
             return {
-                resultCode: 0
+                resultCode: 0,
+                updateSession: {
+                    data: {
+                        lang: msg.lang
+                    },
+                    response: {
+                        lang: msg.lang
+                    }
+                }
             };
         });
     },

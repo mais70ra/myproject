@@ -39,7 +39,6 @@ export const updateCurrent = data => dispatch => {
 };
 
 export const changeLanguage = data => dispatch => {
-    debugger;
     return dispatch({
         type: GET_CURRENT,
         method: 'user.changeLanguage',

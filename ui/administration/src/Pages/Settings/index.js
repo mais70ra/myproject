@@ -20,7 +20,7 @@ class Settings extends Component {
             <ChangeLangForm
                 formName="ChangeLangForm"
                 displayName={t("Settings")}
-                initialValues={this.props.currentUser}
+                currentUser={this.props.currentUser}
             />
         );
     }
